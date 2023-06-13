@@ -16,10 +16,5 @@ pip install Griffis-Soccer-Analysis
 
 Here is an example of how to load the package.
 ``` python
-import Griffis_Soccer_Analysis as bg
-```
-
-You don't need to load it as anything, so this will also load all functions:
-``` python
 import Griffis_Soccer_Analysis
 ```
