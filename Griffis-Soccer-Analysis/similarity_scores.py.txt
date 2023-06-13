@@ -199,7 +199,7 @@ def player_similarity(player, position, nplayers=20, similar_lg_team=False, mean
                 color='teal', ymax=.1, lw=1.5, alpha=.8)
     plt.text(x=base.Similarity.quantile(.98)-1, y=1,
              s='98th Percentile', ha='right', va='bottom', color='darkslategrey', size=6)
-    plt.title(f'Player Style/Profile Similarity to {player}\nDistribution of all {position} similarities\nData via Wyscout | Model by @BeGriffis',
+    plt.title(f'Player Style/Profile Similarity to\n{player}\nDistribution of all {position} similarities\nData via Wyscout | Model by @BeGriffis',
               color='#4A2E19', size=8)
     
     fig = plt.gcf()
@@ -228,7 +228,7 @@ def teams_in_league(league):
     
     return teams
 
-def available_player(league, team):
+def available_players(league, team):
     pd.set_option('display.max_colwidth', None)
     df = pd.read_csv('c:/users/ben/downloads/league style similarity players.csv')
     df = df[(df['League']==league) & (df['Team within selected timeframe']==team)][['Player_Team','Player','Age','Real Position']]
