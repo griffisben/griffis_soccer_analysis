@@ -21,24 +21,24 @@ import Griffis_Soccer_Analysis
 
 ## Examples
 
-### See available leagues
+#### See available leagues
 ```Python
 available_leagues()
 ```
-See available teams in a league
+#### See available teams in a league
 ```Python
 teams_in_league(
     league = "A-League Men 22-23"
 )
 ```
-See available players in a team
+#### See available players in a team
 ```Python
 available_players(
     league = "A-League Men 22-23",
     team = 'Western Sydney Wanderers'
 )
 ```
-League Similarities
+#### League Similarities
 ```Python
 # This is how to grab all outputs
 df, info, dist_fig = league_similarity(
@@ -51,7 +51,7 @@ for i in range(len(info)):
     print(info[i])
 df
 ```
-Team similarities
+#### Team similarities
 ```Python
 # This is how to grab all outputs
 df, info, dist_fig = team_similarity(
@@ -65,7 +65,7 @@ for i in range(len(info)):
     print(info[i])
 df
 ```
-Player similarities
+#### Player similarities
 ```Python
 # This is how to grab all outputs
 df, info, dist_fig = player_similarity(
