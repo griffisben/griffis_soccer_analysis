@@ -21,7 +21,7 @@ import Griffis_Soccer_Analysis
 
 ## Examples
 
-See available leagues
+### See available leagues
 ```Python
 available_leagues()
 ```
