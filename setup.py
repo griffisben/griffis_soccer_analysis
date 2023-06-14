@@ -1,4 +1,4 @@
-import setuptools
+from setuptools import setup
 
 setup(
     name='Griffis_Soccer_Analysis',
