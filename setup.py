@@ -9,5 +9,5 @@ setup(
     author_email='1.fcgriffisconsulting@gmail.com',
     
     packages=['Griffis_Soccer_Analysis'],
-    install_requires=['pandas','matplotlib','seaborn','numpy','sklearn'],
+    install_requires=['pandas','matplotlib','seaborn','numpy','scikit-learn'],
 )
