@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='Griffis_Soccer_Analysis',
+    name='griffis_soccer_analysis',
     version='1.0.0',
 
-    url='https://github.com/griffisben/Griffis-Soccer-Analysis',
+    url='https://github.com/griffisben/griffis_soccer_analysis',
     author='Ben Griffis',
     author_email='1.fcgriffisconsulting@gmail.com',
     
-    packages=['Griffis_Soccer_Analysis'],
+    packages=['griffis_soccer_analysis'],
     install_requires=['pandas','matplotlib','seaborn','numpy','scikit-learn'],
 )
