@@ -1,3 +1,4 @@
+from functools import lru_cache
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -6,6 +7,10 @@ import statistics
 from sklearn.metrics.pairwise import cosine_similarity
 import warnings
 warnings.filterwarnings("ignore")
+
+@lru_cache(maxsize=10)
+def read_parquet(link):
+    return pd.read_parquet(link)
 
 def league_similarity(league, season, nlgs=20):
     # League input
@@ -137,16 +142,11 @@ def player_similarity(player, position, nplayers=20, similar_lg_team=False, mean
         return ['Sorry'], ['Sorry'], ['Sorry']
     else:
         # Load the data
-        df = pd.read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
-        df1 = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
+        df = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
+        df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
-        base['Player'] = ''
-        for i in range(len(base)):
-            l = [base['Player 1'].values[i],base['Player 2'].values[i]]
-            l.remove(player)
-            base.Player[i] = l[0]
-
-        base = base[['Player','Similarity']]
+        base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
+        base = base.loc[:, ['Player', 'Similarity']]
 
         if similar_lg_team == True:
             extra = "  that are also in teams & leagues with relatively similar styles"
@@ -166,24 +166,31 @@ def player_similarity(player, position, nplayers=20, similar_lg_team=False, mean
 
         final = base[base.Similarity >= base.Similarity.quantile(.98)].reset_index(drop=True)
 
-        final['League Style Similarity'] = 0.0
-        final['Team Style Similarity'] = 0.0
         foc_p = player.split(", ")[2].split(')')[0]
         foc_t = player.split(', ')[1]
-        for i in range(len(final)):
-            c_p = final.Player[i].split(", ")[2].split(')')[0]
-            c_t = final.Player[i].split(', ')[1]
-            s = df1[((df1['League1']==foc_p) | (df1['League2']==foc_p)) & ((df1['League1']==c_p) | (df1['League2']==c_p))].copy()
-            s = s[((s['Team1']==foc_t) | (s['Team2']==foc_t)) & ((s['Team1']==c_t) | (s['Team2']==c_t))].copy()
-            final['League Style Similarity'][i] = s.LeagueSimilarity.values[0]
-            final['Team Style Similarity'][i] = s.Similarity.values[0]
-            if foc_p == c_p:
-                final['League Style Similarity'][i] = 100
-            if foc_t == c_t:
-                final['Team Style Similarity'][i] = 100
-            c_p=''
-            c_t=''
-        final.rename(columns={'Similarity':'Player Style Similarity'},inplace=True)
+
+        final['League 1'] = [" - ".join(x.split(', ')[1:]).rstrip(')') for x in final['Player']]
+        final['League 2'] = f'{foc_t} - {foc_p}'
+
+        final.loc[:, ['League 1', 'League 2']] = final.loc[:, ['League 1', 'League 2']].apply(lambda x: sorted(x), axis=1).to_list()
+
+        final = final.merge(df1.rename(columns={'Similarity': 'Team Style Similarity',
+                                                'LeagueSimilarity': 'League Style Similarity'}),
+                    on=['League 1', 'League 2'], how='inner')\
+        .loc[:, ['Player', 'Similarity', 'League Style Similarity', 'Team Style Similarity', 
+                 'League1', 'League2', 'Team1', 'Team2']]\
+        .rename(columns={'Similarity': 'Player Style Similarity'})\
+        .sort_values(by='Player Style Similarity', ascending=False).reset_index(drop=True)
+        final['Team Style Similarity'] = pd.Series([100 if t1 == t2 else tss \
+                                                      for (t1, t2, tss) in zip(final['Team1'],
+                                                                               final['Team2'],
+                                                                               final['Team Style Similarity'])])
+        final['League Style Similarity'] = pd.Series([100 if l1 == l2 else lss \
+                                                      for (l1, l2, lss) in zip(final['League1'],
+                                                                               final['League2'],
+                                                                               final['League Style Similarity'])])
+        final = final.loc[:, ['Player', 'Player Style Similarity', 
+                              'League Style Similarity', 'Team Style Similarity']]
 
         if mean_sim == True:
             similar_lg_team = True
@@ -191,9 +198,7 @@ def player_similarity(player, position, nplayers=20, similar_lg_team=False, mean
             final = final[(final['League Style Similarity']>0) & (final['Team Style Similarity']>0)].reset_index(drop=True)
 
             if mean_sim == True:
-                final['Mean Similarity'] = 0.0
-                for i in range(len(final)):
-                    final['Mean Similarity'][i] = np.mean(final.iloc[i,1:-1].values)
+                final['Mean Similarity'] = final.loc[:, ['Player Style Similarity', 'League Style Similarity', 'Team Style Similarity']].mean(axis=1)
                 final = final.sort_values(by=['Mean Similarity'],ascending=False).reset_index(drop=True)
 
         # Make the graph
