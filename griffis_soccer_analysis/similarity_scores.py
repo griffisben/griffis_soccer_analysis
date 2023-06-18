@@ -1,4 +1,3 @@
-from functools import lru_cache
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
@@ -8,7 +7,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import warnings
 warnings.filterwarnings("ignore")
 
-@lru_cache(maxsize=10)
 def read_parquet(link):
     return pd.read_parquet(link)
 
