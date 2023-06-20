@@ -49,7 +49,7 @@ def league_similarity(league, season, nlgs=20):
     stddev = f'1.5 Standard Deviation similarity score: {round(np.mean(final.Similarity)+(1.5*(np.std(final.Similarity))),2)}'
     sample = f'Includes data from 112 leagues'
     score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
-    sim_note = "Similarity is purely style finald on over 35 metrics, not that each league is the same quality"
+    sim_note = "Similarity is purely style based on over 35 metrics, not that each league is the same quality"
     signature = "Data via Wyscout  |  Model by Ben Griffis (@BeGriffis)"
 
     information = [title,mean,stddev,sample,score_note,sim_note,signature]
