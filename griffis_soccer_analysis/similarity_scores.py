@@ -80,13 +80,7 @@ def team_similarity(team, league, season, nteams=20):
     similarity_df = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/team%20similarities.parquet')
     df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
     
-    base = similarity_df[(similarity_df['League 1']==team_input) | (similarity_df['League 2']==team_input)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
-    base['Team'] = ''
-    for i in range(len(base)):
-        l = [base['League 1'].values[i],base['League 2'].values[i]]
-        l.remove(team_input)
-        base.Team[i] = l[0]
-    base = base[['Team','Similarity']]
+    base = similarity_df.loc[(similarity_df['League 1']==team_input) | (similarity_df['League 2']==team_input)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
 
     # Basic notes
     title = f'\033[1mTeam Style Similarity to {team_input}\033[0;0m\n'
@@ -100,18 +94,13 @@ def team_similarity(team, league, season, nteams=20):
     information = [title,mean,stddev,sample,score_note,sim_note,signature]
     
     # Only include teams at least 1 standard deviation above the mean score
-    final = base[base.Similarity >= (np.mean(base.Similarity)+(1.5*(np.std(base.Similarity))))].head(nteams)
-
-    # Calculate & add league style similarity
-    final['League Style Similarity'] = 0.0
-    foc_team_input = team_input.split(" - ")[1]
-    for i in range(len(final)):
-        c_team_input = final.Team[i].split(" - ")[1]
-        s = df1[((df1['League1']==foc_team_input) | (df1['League2']==foc_team_input)) & ((df1['League1']==c_team_input) | (df1['League2']==c_team_input))].copy()
-        final['League Style Similarity'][i] = s.LeagueSimilarity.values[0]
-        if foc_team_input == c_team_input:
-            final['League Style Similarity'][i] = 100
-    final.rename(columns={'Similarity':'Team Style Similarity'},inplace=True)
+    final = base.loc[base.Similarity >= (np.mean(base.Similarity) + (1.5 * (np.std(base.Similarity))))].head(nteams)
+    final = final.merge(df1, how='inner', on=['League 1', 'League 2'])
+    final['Team'] = (final['League 2']).where(base['League 1'] == team_input, final['League 1'])
+    final['LeagueSimilarity'] = (final['LeagueSimilarity']).where(final['League1'] != final['League2'], 100)
+    final = final.loc[:, ['Team', 'Similarity_x', 'LeagueSimilarity']].rename(
+        columns={'LeagueSimilarity': 'League Style Similarity',
+                 'Similarity_x': 'Team Style Similarity'})
     
     # Make the graph
     sns.set(rc={'figure.dpi': 200, 'axes.grid': False, 'text.color': '#4A2E19',
@@ -163,7 +152,7 @@ def player_similarity(player, position, nplayers=20, similar_lg_team=False, mean
 
         information = [title,pct98,sample,score_note,sim_note,sim_lg_team_note,signature]
 
-        final = base[base.Similarity >= base.Similarity.quantile(.98)].reset_index(drop=True)
+        final = base.loc[base.Similarity >= base.Similarity.quantile(.98)].reset_index(drop=True)
 
         foc_p = player.split(", ")[2].split(')')[0]
         foc_t = player.split(', ')[1]
