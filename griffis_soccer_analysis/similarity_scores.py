@@ -17,7 +17,7 @@ def league_similarity(league, season, nlgs=20):
     league_input = f"{league} {season}"
 
     # Read the CSV file
-    data = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
+    data = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
 
     # Calculate cosine similarity between leagues
     similarity_matrix = cosine_similarity(data.iloc[:, 1:])
@@ -78,8 +78,8 @@ def team_similarity(team, league, season, nteams=20):
     team_input = f"{team} - {league} {season}"
 
     # Load the data
-    similarity_df = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/team%20similarities.parquet')
-    df1 = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
+    similarity_df = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/team%20similarities.parquet')
+    df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
     
     base = similarity_df[(similarity_df['League 1']==team_input) | (similarity_df['League 2']==team_input)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
     base['Team'] = ''
