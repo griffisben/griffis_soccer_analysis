@@ -21,26 +21,11 @@ def league_similarity(league, season, nlgs=20):
     # Calculate cosine similarity between leagues
     similarity_matrix = cosine_similarity(data.iloc[:, 1:])
 
-    # Create a DataFrame to store league pairs and similarity scores
-    similarities = []
-    num_leagues = len(data)
-    for i in range(num_leagues):
-        for j in range(i + 1, num_leagues):
-            league1 = data.iloc[i, 0]
-            league2 = data.iloc[j, 0]
-            similarity = similarity_matrix[i, j]
-            similarities.append([league1, league2, similarity*100])
+    ind = data.loc[data['League'] == league_input].index
 
-    similarity_df = pd.DataFrame(similarities, columns=['League 1', 'League 2', 'Similarity'])
-
-    final = similarity_df[(similarity_df['League 1']==league_input) | (similarity_df['League 2']==league_input)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
-    final['League'] = ''
-    for i in range(len(final)):
-        l = [final['League 1'].values[i],final['League 2'].values[i]]
-        l.remove(league_input)
-        final.League[i] = l[0]
-
-    final = final[['League','Similarity']]
+    final = pd.concat([data.loc[:, 'League'], pd.Series(similarity_matrix[ind].flatten()) * 100], axis=1,
+                      ignore_index=True).sort_values(by=1, ascending=False).iloc[1:].reset_index(drop=True)
+    final.columns = ['League', 'Similarity']
 
     # Basic notes
     title = f'\033[1mLeague Style Similarity to {league_input}\033[0;0m\n'
