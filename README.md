@@ -26,12 +26,12 @@ import griffis_soccer_analysis as gsa
 
 #### Download the latest FBRef data (via Opta) for UEFA top 5 players
 ``` python
-gsa.fbref_code.scrape_fbref_t5_leagues_players()
+gsa.scrape_fbref_t5_leagues_players()
 ```
 
 #### Make a quick scouting card of 12 key stats for a player
 ``` python
-gsa.fbref_code.fbref_scout_report(season = '22-23',
+gsa.fbref_scout_report(season = '22-23',
             program = 'mf',
             player_pos = 'Central Midfield',
             playerPrompt = 'Branco van den Boomen',
@@ -50,17 +50,17 @@ For a Juypter Notebook file with example code & output and more info on each var
 
 #### See available leagues
 ```Python
-gsa.similarity.available_leagues()
+gsa.available_leagues()
 ```
 #### See available teams in a league
 ```Python
-gsa.similarity.teams_in_league(
+gsa.teams_in_league(
     league = "A-League Men 22-23"
 )
 ```
 #### See available players in a team
 ```Python
-gsa.similarity.available_players(
+gsa.available_players(
     league = "A-League Men 22-23",
     team = 'Western Sydney Wanderers'
 )
@@ -68,7 +68,7 @@ gsa.similarity.available_players(
 #### League Similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.similarity.league_similarity(
+df, info, dist_fig = gsa.league_similarity(
     league = "A-League Men",
     season = "22-23",
     nlgs = 15
@@ -81,7 +81,7 @@ df
 #### Team similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.similarity.team_similarity(
+df, info, dist_fig = gsa.team_similarity(
     team = "Western Sydney Wanderers",
     league = "A-League Men",
     season = "22-23",
@@ -95,7 +95,7 @@ df
 #### Player similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.similarity.player_similarity(
+df, info, dist_fig = gsa.player_similarity(
     player = "C. Nieuwenhof (22, Western Sydney Wanderers, A-League Men 22-23)",
     position = "CM",
     nplayers = 20,
