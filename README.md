@@ -20,10 +20,33 @@ pip install git+https://github.com/griffisben/griffis_soccer_analysis.git
 
 Here is an example of how to load the package.
 ``` python
-from griffis_soccer_analysis.similarity_scores import *
+from griffis_soccer_analysis.fbref_code import *
+from griffis_soccer_analysis.similarity import *
+```
+## FBRef Code Examples
+
+#### Download the latest FBRef data (via Opta) for UEFA top 5 players
+``` python
+scrape_fbref_t5_leagues_players()
 ```
 
-## Examples
+#### Make a quick scouting card of 12 key stats for a player
+``` python
+fbref_scout_report(season = '22-23',
+            program = 'mf',
+            player_pos = 'Central Midfield',
+            playerPrompt = 'Branco van den Boomen',
+            SquadPrompt = '',
+            minutesPlayed = 900,
+            compP = 'ligue 1',
+            saveinput = 'n',
+            signature = '@BeGriffis',
+            data_date = 'Data final for 22/23',
+            fbref_file_path = 'C:/Users/Ben/From Mac/Python/FBRef/'
+           )
+```
+
+## Similarity Examples
 For a Juypter Notebook file with example code & output and more info on each variable, please [see this file](https://github.com/griffisben/griffis_soccer_analysis/blob/main/griffis_soccer_analysis%20examples.ipynb)
 
 #### See available leagues
@@ -78,6 +101,8 @@ df, info, dist_fig = player_similarity(
     position = "CM",
     nplayers = 20,
     t5_leagues = 'y',  # 'y', 'Y', 'yes', 'Yes' will only show similar players that currently (22/23) play in the T5 UEFA leagues
+    min_age = 1,   # Minimum age of similar players (always still inside the top 2%)
+    max_age = 99,   # Maximum age of similar players
     similar_lg_team = False,
     mean_sim = False
 )
