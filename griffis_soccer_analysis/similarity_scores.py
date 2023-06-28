@@ -151,7 +151,10 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
         base = base.loc[:, ['Player', 'Similarity']]
 
         if similar_lg_team == True:
-            extra = "  that are also in teams & leagues with relatively similar styles"
+            if t5_leagues in ['y','Y','yes','Yes','YES']:
+                extra = " in UEFA T5 leagues that are also in teams & leagues with relatively similar styles"
+            else:
+                extra = " that are also in teams & leagues with relatively similar styles"
         else:
             extra = ""
 
