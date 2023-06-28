@@ -17,7 +17,7 @@ def league_similarity(league, season, nlgs=20):
     league_input = f"{league} {season}"
 
     # Read the CSV file
-    data = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
+    data = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
 
     # Calculate cosine similarity between leagues
     similarity_matrix = cosine_similarity(data.iloc[:, 1:])
@@ -78,8 +78,8 @@ def team_similarity(team, league, season, nteams=20):
     team_input = f"{team} - {league} {season}"
 
     # Load the data
-    similarity_df = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/team%20similarities.parquet')
-    df1 = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
+    similarity_df = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/team%20similarities.parquet')
+    df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
     
     base = similarity_df[(similarity_df['League 1']==team_input) | (similarity_df['League 2']==team_input)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
     base['Team'] = ''
@@ -146,7 +146,6 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
         df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
         if t5_leagues in ['y','Y','yes','Yes','YES']:
             df = df[df['T5']==1].reset_index(drop=True)
-            df1 = df1[df1['T5']==1].reset_index(drop=True)
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
         base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
         base = base.loc[:, ['Player', 'Similarity']]
@@ -224,13 +223,13 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
         return final.head(nplayers), information, fig
 
 def available_leagues():
-    data = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
+    data = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity.parquet')
     lgs = data['League'].unique().tolist()
     
     return lgs
 
 def teams_in_league(league):
-    data = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity%20teams.parquet')
+    data = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity%20teams.parquet')
     data = data[['Team within selected timeframe']]
     data['League'] = ''
     data['Team'] = ''
@@ -246,7 +245,7 @@ def teams_in_league(league):
 
 def available_players(league, team):
     pd.set_option('display.max_colwidth', None)
-    df = pd.read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity%20players.parquet')
+    df = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/league%20style%20similarity%20players.parquet')
     df = df[(df['League']==league) & (df['Team within selected timeframe']==team)][['Player_Team','Player','Age','Real Position']]
     
     return df
