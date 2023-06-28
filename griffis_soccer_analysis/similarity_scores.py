@@ -156,7 +156,10 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
             else:
                 extra = " that are also in teams & leagues with relatively similar styles"
         else:
-            extra = ""
+            if t5_leagues in ['y','Y','yes','Yes','YES']:
+                extra = " in UEFA T5 leagues"
+            else:
+                extra = ""
 
         # Basic notes
         title = f'\033[1mPlayer Style/Profile Similarity to: {player}\033[0;0m\n'
