@@ -76,6 +76,7 @@ df, info, dist_fig = player_similarity(
     player = "C. Nieuwenhof (22, Western Sydney Wanderers, A-League Men 22-23)",
     position = "CM",
     nplayers = 20,
+    t5_leagues = 'y',  # 'y', 'Y', 'yes', 'Yes' will only show similar players that currently (22/23) play in the T5 UEFA leagues
     similar_lg_team = False,
     mean_sim = False
 )
