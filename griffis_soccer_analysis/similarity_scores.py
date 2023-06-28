@@ -144,12 +144,11 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
         # Load the data
         df = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
         df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
-        if t5_leagues in ['y','Y','yes','Yes','YES']:
-            df = df[df['T5']==1].reset_index(drop=True)
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
         base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
         base = base.loc[:, ['Player', 'Similarity']]
-
+        top2pct = base.Similarity.quantile(.98)
+        
         if similar_lg_team == True:
             if t5_leagues in ['y','Y','yes','Yes','YES']:
                 extra = " in UEFA T5 leagues that are also in teams & leagues with relatively similar styles"
@@ -163,7 +162,7 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
 
         # Basic notes
         title = f'\033[1mPlayer Style/Profile Similarity to: {player}\033[0;0m\n'
-        pct98 = f'98th Percentile similarity score: {round(base.Similarity.quantile(.98),2)}'
+        pct98 = f'98th Percentile similarity score: {round(top2pct,2)}'
         sample = f'Includes {position}s from 112 leagues, minimum 900 mins  |  Sample size: {len(base)} players'
         score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
         sim_note = "Similarity is purely style/profile based on over 35 metrics, not that each player is the same quality"
@@ -172,7 +171,7 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
 
         information = [title,pct98,sample,score_note,sim_note,sim_lg_team_note,signature]
 
-        final = base[base.Similarity >= base.Similarity.quantile(.98)].reset_index(drop=True)
+        final = base[base.Similarity >= top2pct].reset_index(drop=True)
 
         foc_p = player.split(", ")[2].split(')')[0]
         foc_t = player.split(', ')[1]
@@ -225,6 +224,13 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', similar_lg_
 
         fig = plt.gcf()
         plt.close(fig)
+
+        final['T5'] = [1 if final.iloc[x,0].split(", ")[2].split(')')[0] == 'Premier League 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Ligue 1 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Bundesliga 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'La Liga 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Serie A 22-23' else 0\
+                       for x in range(len(final))]
+        if t5_leagues in ['y','Y','yes','Yes','YES']:
+            final = final.loc[final.T5==1][['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
+        else:
+            final = final[['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
 
         return final.head(nplayers), information, fig
 
