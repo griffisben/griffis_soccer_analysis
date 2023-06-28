@@ -50,17 +50,17 @@ For a Juypter Notebook file with example code & output and more info on each var
 
 #### See available leagues
 ```Python
-available_leagues()
+gsa.similarity.available_leagues()
 ```
 #### See available teams in a league
 ```Python
-teams_in_league(
+gsa.similarity.teams_in_league(
     league = "A-League Men 22-23"
 )
 ```
 #### See available players in a team
 ```Python
-available_players(
+gsa.similarity.available_players(
     league = "A-League Men 22-23",
     team = 'Western Sydney Wanderers'
 )
@@ -68,7 +68,7 @@ available_players(
 #### League Similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = league_similarity(
+df, info, dist_fig = gsa.similarity.league_similarity(
     league = "A-League Men",
     season = "22-23",
     nlgs = 15
@@ -81,7 +81,7 @@ df
 #### Team similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = team_similarity(
+df, info, dist_fig = gsa.similarity.team_similarity(
     team = "Western Sydney Wanderers",
     league = "A-League Men",
     season = "22-23",
@@ -95,11 +95,13 @@ df
 #### Player similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = player_similarity(
+df, info, dist_fig = gsa.similarity.player_similarity(
     player = "C. Nieuwenhof (22, Western Sydney Wanderers, A-League Men 22-23)",
     position = "CM",
     nplayers = 20,
     t5_leagues = 'y',  # 'y', 'Y', 'yes', 'Yes' will only show similar players that currently (22/23) play in the T5 UEFA leagues
+    min_age = 1,   # Minimum age of similar players (always still inside the top 2%)
+    max_age = 99,   # Maximum age of similar players
     similar_lg_team = False,
     mean_sim = False
 )
