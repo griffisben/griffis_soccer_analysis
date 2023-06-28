@@ -20,18 +20,19 @@ pip install git+https://github.com/griffisben/griffis_soccer_analysis.git
 
 Here is an example of how to load the package.
 ``` python
-import griffis_soccer_analysis as gsa
+from griffis_soccer_analysis.fbref_code import *
+from griffis_soccer_analysis.similarity import *
 ```
 ## FBRef Code Examples
 
 #### Download the latest FBRef data (via Opta) for UEFA top 5 players
 ``` python
-gsa.scrape_fbref_t5_leagues_players()
+scrape_fbref_t5_leagues_players()
 ```
 
 #### Make a quick scouting card of 12 key stats for a player
 ``` python
-gsa.fbref_scout_report(season = '22-23',
+fbref_scout_report(season = '22-23',
             program = 'mf',
             player_pos = 'Central Midfield',
             playerPrompt = 'Branco van den Boomen',
@@ -50,17 +51,17 @@ For a Juypter Notebook file with example code & output and more info on each var
 
 #### See available leagues
 ```Python
-gsa.available_leagues()
+available_leagues()
 ```
 #### See available teams in a league
 ```Python
-gsa.teams_in_league(
+teams_in_league(
     league = "A-League Men 22-23"
 )
 ```
 #### See available players in a team
 ```Python
-gsa.available_players(
+available_players(
     league = "A-League Men 22-23",
     team = 'Western Sydney Wanderers'
 )
@@ -68,7 +69,7 @@ gsa.available_players(
 #### League Similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.league_similarity(
+df, info, dist_fig = league_similarity(
     league = "A-League Men",
     season = "22-23",
     nlgs = 15
@@ -81,7 +82,7 @@ df
 #### Team similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.team_similarity(
+df, info, dist_fig = team_similarity(
     team = "Western Sydney Wanderers",
     league = "A-League Men",
     season = "22-23",
@@ -95,7 +96,7 @@ df
 #### Player similarities
 ```Python
 # This is how to grab all outputs
-df, info, dist_fig = gsa.player_similarity(
+df, info, dist_fig = player_similarity(
     player = "C. Nieuwenhof (22, Western Sydney Wanderers, A-League Men 22-23)",
     position = "CM",
     nplayers = 20,
