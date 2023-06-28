@@ -24,6 +24,7 @@ from griffis_soccer_analysis.similarity_scores import *
 ```
 
 ## Examples
+For a Juypter Notebook file with example code & output and more info on each variable, please [see this file](https://github.com/griffisben/griffis_soccer_analysis/blob/main/griffis_soccer_analysis%20examples.ipynb)
 
 #### See available leagues
 ```Python
