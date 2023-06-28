@@ -20,10 +20,32 @@ pip install git+https://github.com/griffisben/griffis_soccer_analysis.git
 
 Here is an example of how to load the package.
 ``` python
-from griffis_soccer_analysis.similarity_scores import *
+import griffis_soccer_analysis as gsa
+```
+## FBRef Code Examples
+
+#### Download the latest FBRef data (via Opta) for UEFA top 5 players
+``` python
+gsa.fbref_code.scrape_fbref_t5_leagues_players()
 ```
 
-## Examples
+#### Make a quick scouting card of 12 key stats for a player
+``` python
+gsa.fbref_code.fbref_scout_report(season = '22-23',
+            program = 'mf',
+            player_pos = 'Central Midfield',
+            playerPrompt = 'Branco van den Boomen',
+            SquadPrompt = '',
+            minutesPlayed = 900,
+            compP = 'ligue 1',
+            saveinput = 'n',
+            signature = '@BeGriffis',
+            data_date = 'Data final for 22/23',
+            fbref_file_path = 'C:/Users/Ben/From Mac/Python/FBRef/'
+           )
+```
+
+## Similarity Examples
 For a Juypter Notebook file with example code & output and more info on each variable, please [see this file](https://github.com/griffisben/griffis_soccer_analysis/blob/main/griffis_soccer_analysis%20examples.ipynb)
 
 #### See available leagues
