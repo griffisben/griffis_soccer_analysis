@@ -42,7 +42,7 @@ fbref_scout_report(season = '22-23',
             saveinput = 'n',
             signature = '@BeGriffis',
             data_date = 'Data final for 22/23',
-            fbref_file_path = 'C:/Users/Ben/From Mac/Python/FBRef/'
+            fbref_file_path = 'C:/Users/You/File Path Here/'
            )
 ```
 
