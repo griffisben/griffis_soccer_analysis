@@ -135,14 +135,19 @@ def team_similarity(team, league, season, nteams=20):
 
 def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, max_age=99, similar_lg_team=False, mean_sim=False):
     if position == 'GK':
-        print('Sorry... GKs & CBs unavailable right now.')
-        return ['Sorry'], ['Sorry'], ['Sorry']
-    elif position == 'CB':
-        print('Sorry... GKs & CBs unavailable right now.')
+        print('Sorry... GKs unavailable right now.')
         return ['Sorry'], ['Sorry'], ['Sorry']
     else:
         # Load the data
-        df = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
+        if position in ['CB', 'FB']:
+            dfx = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_1.parquet')
+            dfy = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_2.parquet')
+            df = pd.concat([dfx,dfy]).reset_index(drop=True)
+            del dfx
+            del dfy
+
+        else:
+            df = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
         df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
         base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
