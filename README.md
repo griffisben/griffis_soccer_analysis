@@ -17,6 +17,10 @@ To install the package, you can type or copy/paste this into you command line:
 ``` python
 pip install git+https://github.com/griffisben/griffis_soccer_analysis.git
 ```
+If you want to update the package, you can first uninstall the old package by entering this line into your command line:
+``` python
+pip uninstall griffis_soccer_analysis
+```
 
 Here is an example of how to load the package.
 ``` python
