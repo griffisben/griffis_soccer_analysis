@@ -69,7 +69,7 @@ ssns = ['2023-2024',
 #         '2023',
        ]
 
-scrape_fbref_next12_leagues_players(competitions = comps, seasons = ssns)
+scrape_fbref_next12_leagues_players(comps = comps, seasons = ssns)
 ```
 
 
