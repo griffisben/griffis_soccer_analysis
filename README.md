@@ -17,6 +17,10 @@ To install the package, you can type or copy/paste this into you command line:
 ``` python
 pip install git+https://github.com/griffisben/griffis_soccer_analysis.git
 ```
+If you want to update the package, you can first uninstall the old package by entering this line into your command line:
+``` python
+pip uninstall griffis_soccer_analysis
+```
 
 Here is an example of how to load the package.
 ``` python
@@ -25,10 +29,49 @@ from griffis_soccer_analysis.similarity import *
 ```
 ## FBRef Code Examples
 
-#### Download the latest FBRef data (via Opta) for UEFA top 5 players
+#### Download the latest FBRef data (via Opta) for UEFA top 5 players (note, will only work for the current, ongoing season)
 ``` python
-scrape_fbref_t5_leagues_players()
+scrape_fbref_t5_leagues_players(season = '2023-2024')
 ```
+
+#### Download the latest FBRef data (via Opta) for all other leagues FBRef has advanced data for (note, will only work for the current, ongoing season... also, Serie B & La Liga 2 have missing pages on FBRef at this time, and Copa de la Liga Profesional is not up yet. Once those pages work, you can simply un-comment them.)
+``` python
+comps = [
+    'Liga MX',
+    'MLS',
+    'Brasileirão',
+    'Eredivisie',
+    'Primeira Liga',
+    'Championship',
+    
+    '2. Bundesliga',
+    'Ligue 2',
+#     'Serie B',
+#     'La Liga 2',
+    'Belgian Pro League',
+    'Argentine Primera División',
+#     'Argentina Copa de la Liga'
+]
+
+ssns = ['2023-2024',
+       '2023',
+        '2023',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        
+        '2023-2024',
+        '2023-2024',
+#         '2023-2024',
+#         '2023-2024',
+        '2023-2024',
+        '2023',
+#         '2023',
+       ]
+
+scrape_fbref_next12_leagues_players(competitions = comps, seasons = ssns)
+```
+
 
 #### Make a quick scouting card of 12 key stats for a player
 ``` python
