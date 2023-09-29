@@ -1826,7 +1826,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         stat1 = "pAdjDrbTklPer90"
         stat2 = "pAdjTklWinPossPer90"
         stat3 = "DrbTkl%"
-        stat4 = "Tkl+IntOppTouch"
+        stat4 = "Tkl+IntPer600OppTouch"
         stat5 = "pAdjClrPer90"
         stat6 = "pAdjShBlocksPer90"
         stat7 = "pAdjIntPer90"
