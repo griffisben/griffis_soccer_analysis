@@ -34,42 +34,43 @@ from griffis_soccer_analysis.similarity import *
 scrape_fbref_t5_leagues_players(season = '2023-2024')
 ```
 
-#### Download the latest FBRef data (via Opta) for all other leagues FBRef has advanced data for (note, will only work for the current, ongoing season... also, Serie B & La Liga 2 have missing pages on FBRef at this time, and Copa de la Liga Profesional is not up yet. Once those pages work, you can simply un-comment them.)
+#### Download the latest FBRef data (via Opta) for all other leagues FBRef has advanced data for (note, will only work for the current, ongoing season)
 ``` python
-comps = [
-    'Liga MX',
-    'MLS',
-    'Brasileirão',
-    'Eredivisie',
-    'Primeira Liga',
-    'Championship',
-    
-    '2. Bundesliga',
-    'Ligue 2',
-#     'Serie B',
-#     'La Liga 2',
-    'Belgian Pro League',
-    'Argentine Primera División',
-#     'Argentina Copa de la Liga'
+comps = ['2. Bundesliga',
+         'Ligue 2',
+         'Serie B',
+         'La Liga 2',
+         'Belgian Pro League',
+         'Argentine Primera División',
+         'Argentina Copa de la Liga'
+         'Liga MX',
+         'MLS',
+         'Brasileirão',
+         'Eredivisie',
+         'Primeira Liga',
+         'Championship',
 ]
-
 ssns = ['2023-2024',
-       '2023',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        '2023',
+        '2023',
+        '2023-2024',
+        '2023',
         '2023',
         '2023-2024',
         '2023-2024',
         '2023-2024',
-        
-        '2023-2024',
-        '2023-2024',
-#         '2023-2024',
-#         '2023-2024',
-        '2023-2024',
-        '2023',
-#         '2023',
        ]
 
 scrape_fbref_next12_leagues_players(comps = comps, seasons = ssns)
+```
+
+#### Combine all FBRef scraped leagues into one file
+``` python
+combine_t5_next12_fbref(t5_season = '2023-2024')
 ```
 
 
