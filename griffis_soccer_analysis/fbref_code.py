@@ -1081,7 +1081,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         Comp = player['Comp'].values[0]
 
         # Variables to be plotted
-        stat1 = "npGoalsPer90"
+        stat1 = "GlsxxPer90"
         stat2 = "npxGPer90"
         stat3 = "AssistsPer90"
         stat4 = "xAPer90"
