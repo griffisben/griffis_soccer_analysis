@@ -2066,33 +2066,6 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
             goalkeepers()
     main()
 
-import pandas as pd
-import requests
-from bs4 import BeautifulSoup, Comment
-import os
-from pathlib import Path
-import time
-import warnings
-warnings.filterwarnings("ignore")
-
-
-comps = [
-    'Liga MX',
-    'MLS',
-    'Brasileirão',
-    'Eredivisie',
-    'Primeira Liga',
-    'Championship',
-    
-    '2. Bundesliga',
-    'Ligue 2',
-    'Serie B',
-    'La Liga 2',
-    'Belgian Pro League',
-    'Argentine Primera División',
-    'Argentina Copa de la Liga'
-]
-
 def scrape_fbref_next12_leagues_players(competitions, seasons):
     for k in range(len(competitions)):
         season = seasons[k]
@@ -2628,3 +2601,12 @@ def scrape_fbref_next12_leagues_players(competitions, seasons):
 
     print('Done :) File named "Final FBRef Next 12 Leagues" is located at  %s' %root)
 
+def combine_t5_next12_fbref(t5_season):
+    root = str(Path(os.getcwd()).parents[0]).replace('\\','/')+'/'
+    
+    t5 = pd.read_csv(f'{root}Final FBRef {season}.csv')
+    n12 = pd.read_csv(f'{root}Final FBRef Next 12 Leagues.csv')
+    
+    df = pd.concat([t5,n12])
+    df.to_csv(f'{root}Final FBRef {season}.csv', encoding='utf_8_sig', index=False)
+    
