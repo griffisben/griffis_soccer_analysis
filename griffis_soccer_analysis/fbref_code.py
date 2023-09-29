@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import warnings
 warnings.filterwarnings("ignore")
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 import os
 from pathlib import Path
 import time
@@ -2067,6 +2067,120 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
     main()
 
 def scrape_fbref_next12_leagues_players(comps, seasons):
+    def _get_table(soup):
+        return soup.find_all('table')[0]
+
+    def _get_opp_table(soup):
+        return soup.find_all('table')[1]
+
+    def _parse_row(row):
+        cols = None
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        return cols
+
+    def _parse_team_row(row):
+        cols = None
+        cols = row.find_all(['td', 'th'])
+        cols = [ele.text.strip() for ele in cols]
+        return cols
+
+    def get_players_df(path):
+        URL = path
+        time.sleep(4)
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, "html.parser")
+        comment = soup.find_all(text=lambda t: isinstance(t, Comment))
+        c=0
+        for i in range(len(comment)):
+            if comment[i].find('\n\n<div class="table_container"') != -1:
+                c = i
+        a = comment[c]
+        tbody = a.find('table')
+        sp = BeautifulSoup(a[tbody:], 'html.parser')
+        table = _get_table(sp)
+        data = []
+        headings=[]
+        headtext = sp.find_all("th",scope="col")
+        for i in range(len(headtext)):
+            heading = headtext[i].get_text()
+            headings.append(heading)
+        headings=headings[1:len(headings)]
+        data.append(headings)
+        table_body = table.find('tbody')
+        rows = table_body.find_all('tr')
+
+        for row_index in range(len(rows)):
+            row = rows[row_index]
+            cols = _parse_row(row)
+            data.append(cols)
+
+        data = pd.DataFrame(data)
+        data = data.rename(columns=data.iloc[0])
+        data = data.reindex(data.index.drop(0))
+        data = data.replace('',0)
+        data.insert(4, 'Comp', [comp]*len(data))
+        return data
+
+    def get_team_df(path):
+        URL = path
+        time.sleep(4)
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, "html.parser")
+        table = _get_table(soup)
+        data = []
+        headings=[]
+        headtext = soup.find_all("th",scope="col")
+        for i in range(len(headtext)):
+            heading = headtext[i].get_text()
+            headings.append(heading)
+        headings=headings[0:len(headings)]
+        data.append(headings)
+        table_body = table.find('tbody')
+        rows = table_body.find_all('tr')
+
+        for row_index in range(len(rows)):
+            row = rows[row_index]
+            cols = _parse_team_row(row)
+            data.append(cols)
+
+        data = pd.DataFrame(data)
+        data = data.rename(columns=data.iloc[0])
+        data = data.reindex(data.index.drop(0))
+        data = data.replace('',0)
+        data.insert(1, 'Comp', [comp]*len(data))
+        return data
+
+
+    def get_opp_df(path):
+        URL = path
+        time.sleep(4)
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, "html.parser")
+        table = _get_opp_table(soup)
+        data = []
+        headings=[]
+        headtext = soup.find_all("th",scope="col")
+        for i in range(len(headtext)):
+            heading = headtext[i].get_text()
+            headings.append(heading)
+        headings=headings[0:len(headings)]
+        data.append(headings)
+        table_body = table.find('tbody')
+        rows = table_body.find_all('tr')
+
+        for row_index in range(len(rows)):
+            row = rows[row_index]
+            cols = _parse_team_row(row)
+            data.append(cols)
+
+        data = pd.DataFrame(data)
+        data = data.rename(columns=data.iloc[0])
+        data = data.reindex(data.index.drop(0))
+        data = data.replace('',0)
+        data.insert(1, 'Comp', [comp]*len(data))
+        return data
+
     for k in range(len(comps)):
         season = seasons[k]
         comp = comps[k]
@@ -2120,121 +2234,6 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
 
         # this is the file path root, i.e. where this file is located
         root = str(Path(os.getcwd()).parents[0]).replace('\\','/')+'/'
-
-        # This section creates the programs that gather data from FBRef.com... Data is from FBRef and Opta
-        def _get_table(soup):
-            return soup.find_all('table')[0]
-
-        def _get_opp_table(soup):
-            return soup.find_all('table')[1]
-
-        def _parse_row(row):
-            cols = None
-            cols = row.find_all('td')
-            cols = [ele.text.strip() for ele in cols]
-            return cols
-
-        def _parse_team_row(row):
-            cols = None
-            cols = row.find_all(['td', 'th'])
-            cols = [ele.text.strip() for ele in cols]
-            return cols
-
-        def get_players_df(path):
-            URL = path
-            time.sleep(4)
-            page = requests.get(URL)
-            soup = BeautifulSoup(page.content, "html.parser")
-            comment = soup.find_all(text=lambda t: isinstance(t, Comment))
-            c=0
-            for i in range(len(comment)):
-                if comment[i].find('\n\n<div class="table_container"') != -1:
-                    c = i
-            a = comment[c]
-            tbody = a.find('table')
-            sp = BeautifulSoup(a[tbody:], 'html.parser')
-            table = _get_table(sp)
-            data = []
-            headings=[]
-            headtext = sp.find_all("th",scope="col")
-            for i in range(len(headtext)):
-                heading = headtext[i].get_text()
-                headings.append(heading)
-            headings=headings[1:len(headings)]
-            data.append(headings)
-            table_body = table.find('tbody')
-            rows = table_body.find_all('tr')
-
-            for row_index in range(len(rows)):
-                row = rows[row_index]
-                cols = _parse_row(row)
-                data.append(cols)
-
-            data = pd.DataFrame(data)
-            data = data.rename(columns=data.iloc[0])
-            data = data.reindex(data.index.drop(0))
-            data = data.replace('',0)
-            data.insert(4, 'Comp', [comp]*len(data))
-            return data
-
-        def get_team_df(path):
-            URL = path
-            time.sleep(4)
-            page = requests.get(URL)
-            soup = BeautifulSoup(page.content, "html.parser")
-            table = _get_table(soup)
-            data = []
-            headings=[]
-            headtext = soup.find_all("th",scope="col")
-            for i in range(len(headtext)):
-                heading = headtext[i].get_text()
-                headings.append(heading)
-            headings=headings[0:len(headings)]
-            data.append(headings)
-            table_body = table.find('tbody')
-            rows = table_body.find_all('tr')
-
-            for row_index in range(len(rows)):
-                row = rows[row_index]
-                cols = _parse_team_row(row)
-                data.append(cols)
-
-            data = pd.DataFrame(data)
-            data = data.rename(columns=data.iloc[0])
-            data = data.reindex(data.index.drop(0))
-            data = data.replace('',0)
-            data.insert(1, 'Comp', [comp]*len(data))
-            return data
-
-
-        def get_opp_df(path):
-            URL = path
-            time.sleep(4)
-            page = requests.get(URL)
-            soup = BeautifulSoup(page.content, "html.parser")
-            table = _get_opp_table(soup)
-            data = []
-            headings=[]
-            headtext = soup.find_all("th",scope="col")
-            for i in range(len(headtext)):
-                heading = headtext[i].get_text()
-                headings.append(heading)
-            headings=headings[0:len(headings)]
-            data.append(headings)
-            table_body = table.find('tbody')
-            rows = table_body.find_all('tr')
-
-            for row_index in range(len(rows)):
-                row = rows[row_index]
-                cols = _parse_team_row(row)
-                data.append(cols)
-
-            data = pd.DataFrame(data)
-            data = data.rename(columns=data.iloc[0])
-            data = data.reindex(data.index.drop(0))
-            data = data.replace('',0)
-            data.insert(1, 'Comp', [comp]*len(data))
-            return data
 
 
         # this section gets the raw tables from FBRef.com
@@ -2600,6 +2599,8 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
     df_gk.to_csv(f'{root}Final FBRef Next 12 Leagues GK.csv', index=False, encoding='utf-8-sig')
 
     print('Done :) File named "Final FBRef Next 12 Leagues" is located at  %s' %root)
+
+
 
 def combine_t5_next12_fbref(t5_season):
     root = str(Path(os.getcwd()).parents[0]).replace('\\','/')+'/'
