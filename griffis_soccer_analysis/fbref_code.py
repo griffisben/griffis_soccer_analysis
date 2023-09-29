@@ -2066,8 +2066,8 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
             goalkeepers()
     main()
 
-def scrape_fbref_next12_leagues_players(competitions, seasons):
-    for k in range(len(competitions)):
+def scrape_fbref_next12_leagues_players(comps, seasons):
+    for k in range(len(comps)):
         season = seasons[k]
         comp = comps[k]
         print('Working on %s' %comp)
