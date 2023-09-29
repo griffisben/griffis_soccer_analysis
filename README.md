@@ -76,17 +76,17 @@ combine_t5_next12_fbref(t5_season = '2023-2024')
 
 #### Make a quick scouting card of 12 key stats for a player
 ``` python
-fbref_scout_report(season = '22-23',
-            program = 'mf',
-            player_pos = 'Central Midfield',
-            playerPrompt = 'Branco van den Boomen',
+fbref_scout_report(season = '2023-2024',
+            program = 'mf',   # gk, df, mf, fw (each has 12 selected metrics for the position)
+            player_pos = 'MF',  # GK, DF, MF, FW (FBRef positions)
+            playerPrompt = 'Lucas Besozzi',
             SquadPrompt = '',
-            minutesPlayed = 900,
-            compP = 'ligue 1',
+            minutesPlayed = 700,
+            compP = 'Argentine Primera División',
             saveinput = 'n',
             signature = '@BeGriffis',
-            data_date = 'Data final for 22/23',
-            fbref_file_path = 'C:/Users/You/File Path Here/'
+            data_date = 'Data as of 9/29/23',
+            fbref_file_path = 'C:/Users/Ben/From Mac/Python/'
            )
 ```
 
