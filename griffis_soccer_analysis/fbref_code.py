@@ -986,6 +986,8 @@ def combine_t5_next12_fbref(t5_season):
     
 
 
+
+
 def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, minutesPlayed, compP, saveinput, signature, data_date, fbref_file_path):
     # # Ask what file to use
     ssn = season
@@ -1065,7 +1067,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         if compP == "n":
             dfFilt = dfFilt
         else:
-            dfFilt == dfFilt[dfFilt['Comp']==compP]
+            dfFilt = dfFilt[dfFilt['Comp']==compP]
 #         if compP == "epl":
 #             dfFilt = dfFilt[dfFilt['Comp']=="Premier League"]
 #         if compP == "bundesliga":
@@ -1423,7 +1425,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         # Filter data
         player = df[df['Player']==playerPrompt]
         dfFilt = df[df['Min']>=minutesPlayed]
-        dfFilt = dfFilt[dfFilt['Pos']==player_pos]
+        dfFilt = dfFilt[dfFilt['Pos'].str.contains(player_pos)]
 #         if ((player_pos == 'Goalkeeper') or
 #             (player_pos == 'Centre-Back') or
 #             (player_pos == 'Left-Back') or
@@ -1461,8 +1463,8 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
             player = player[player['Squad']==SquadPrompt]
         if compP == "n":
             dfFilt = dfFilt
-        else:
-            dfFilt == dfFilt[dfFilt['Comp']==compP]
+        if compP != "n":
+            dfFilt = dfFilt[dfFilt['Comp']==compP]
 #         if compP == "epl":
 #             dfFilt = dfFilt[dfFilt['Comp']=="Premier League"]
 #         if compP == "bundesliga":
@@ -1875,7 +1877,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         if compP == "n":
             dfFilt = dfFilt
         else:
-            dfFilt == dfFilt[dfFilt['Comp']==compP]
+            dfFilt = dfFilt[dfFilt['Comp']==compP]
 #         if compP == "epl":
 #             dfFilt = dfFilt[dfFilt['Comp']=="Premier League"]
 #         if compP == "bundesliga":
@@ -2273,7 +2275,7 @@ def fbref_scout_report(season, program, player_pos, playerPrompt, SquadPrompt, m
         if compP == "n":
             dfFilt = dfFilt
         else:
-            dfFilt == dfFilt[dfFilt['Comp']==compP]
+            dfFilt = dfFilt[dfFilt['Comp']==compP]
 #         if compP == "epl":
 #             dfFilt = dfFilt[dfFilt['Comp']=="Premier League"]
 #         if compP == "bundesliga":
