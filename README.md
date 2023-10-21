@@ -56,7 +56,7 @@ whoscored_match_report(
     sig = '@BeGriffis',
     
     # Location of your Chromedriver
-    chrome_driver_loc = r"C:\Users\Ben\From Mac\Python\FBRef\Whoscored Scrape\chromedriver.exe",
+    chrome_driver_loc = r"C:\Users\Ben\chromedriver.exe",
     # Where you want the data to download to
     data_download_loc = "C:/users/ben/downloads",
 
