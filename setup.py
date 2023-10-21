@@ -10,5 +10,5 @@ setup(
     
     packages=['griffis_soccer_analysis'],
     modules=['similarity','fbref_code'],
-    install_requires=['pandas','matplotlib','seaborn','numpy','scikit-learn','scipy'],
+    install_requires=['pandas','matplotlib','seaborn','numpy','scikit-learn','scipy','warnings','pillow','selenium','clipboard'],
 )
