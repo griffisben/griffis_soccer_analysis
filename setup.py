@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='griffis_soccer_analysis',
-    version='1.0.1',
+    version='1.0.2',
 
     url='https://github.com/griffisben/griffis_soccer_analysis',
     author='Ben Griffis',
