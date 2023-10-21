@@ -26,7 +26,49 @@ Here is an example of how to load the package.
 ``` python
 from griffis_soccer_analysis.fbref_code import *
 from griffis_soccer_analysis.similarity import *
+from griffis_soccer_analysis.whoscored_match_report import *
 ```
+## Whoscored Match Report Example
+
+#### Download a csv of events for a given match on the Detailed Tournaments section of Whoscored, and make a post-match report image
+``` python
+whoscored_match_report(
+    # The URL of the Whoscored match (detailed tournamnets only)
+    url = 'https://www.whoscored.com/Matches/1735525/Live/Belgium-Jupiler-Pro-League-2023-2024-Union-St-Gilloise-Eupen',
+    # The match name
+    match = 'Union St. Gilloise 4-1 Eupen',
+    
+    # Home team name
+    team_h = 'Union St. Gilloise',
+    # Whoscored's ID for the home team (can find in the html slug of the team's page)
+    teamId_h = 2647,
+    
+    # Away team name
+    team_a = 'Eupen',
+    # Away team ID
+    teamId_a = 2166,
+    
+    # League name
+    lg = 'Belgian Pro League',
+    # Game date
+    date = 'Oct 20, 2023',
+    # Your signature
+    sig = '@BeGriffis',
+    
+    # Location of your Chromedriver
+    chrome_driver_loc = r"C:\Users\Ben\From Mac\Python\FBRef\Whoscored Scrape\chromedriver.exe",
+    # Where you want the data to download to
+    data_download_loc = "C:/users/ben/downloads",
+
+    # Where you want the final image to export to
+    img_save_loc = "C:/users/ben/downloads",
+    # Path to home team's image
+    home_img = "C:/users/ben/club images/Union St. Gilloise.png",
+    # Path to away team's image
+    away_img = "C:/users/ben/club images/Eupen.png"
+)
+```
+
 ## FBRef Code Examples
 
 #### Download the latest FBRef data (via Opta) for UEFA top 5 players (note, will only work for the current, ongoing season)
