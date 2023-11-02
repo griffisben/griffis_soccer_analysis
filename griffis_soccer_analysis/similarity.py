@@ -47,7 +47,7 @@ def league_similarity(league, season, nlgs=20):
     title = f'\033[1mLeague Style Similarity to {league_input}\033[0;0m\n'
     mean = f'Mean similarity score: {round(np.mean(final.Similarity),2)}'
     stddev = f'1.5 Standard Deviation similarity score: {round(np.mean(final.Similarity)+(1.5*(np.std(final.Similarity))),2)}'
-    sample = f'Includes data from 112 leagues'
+    sample = f'Includes data from 161 leagues'
     score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
     sim_note = "Similarity is purely style based on over 35 metrics, not that each league is the same quality"
     signature = "Data via Wyscout  |  Model by Ben Griffis (@BeGriffis)"
@@ -93,7 +93,7 @@ def team_similarity(team, league, season, nteams=20):
     title = f'\033[1mTeam Style Similarity to {team_input}\033[0;0m\n'
     mean = f'Mean similarity score: {round(np.mean(base.Similarity),2)}'
     stddev = f'1.5 Standard Deviation similarity score: {round(np.mean(base.Similarity)+(1.5*(np.std(base.Similarity))),2)}'
-    sample = f'Includes 1,791 teams from 112 leagues'
+    sample = f'Includes 2,640 teams from 161 leagues'
     score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
     sim_note = "Similarity is purely style based on over 35 metrics, not that each team is the same quality"
     signature = "Data via Wyscout  |  Model by Ben Griffis (@BeGriffis)"
@@ -139,15 +139,16 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
         return ['Sorry'], ['Sorry'], ['Sorry']
     else:
         # Load the data
-        if position in ['CB', 'FB']:
-            dfx = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_1.parquet')
-            dfy = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_2.parquet')
-            df = pd.concat([dfx,dfy]).reset_index(drop=True)
-            del dfx
-            del dfy
+        df1 = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_1.parquet')
+        df2 = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_2.parquet')
+        df3 = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_3.parquet')
+        df4 = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}_4.parquet')
+        df = pd.concat([df1,df2,df3,df4]).reset_index(drop=True)
+        del df1
+        del df2
+        del df3
+        del df4
 
-        else:
-            df = read_parquet(f'https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Player%20Similarity/{position}.parquet')
         df1 = read_parquet('https://github.com/griffisben/Griffis-Soccer-Analysis/raw/main/Files/Team%20and%20League%20Similarity%20Rankings%20Together.parquet')
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
         base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
@@ -168,7 +169,7 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
         # Basic notes
         title = f'\033[1mPlayer Style/Profile Similarity to: {player}\033[0;0m\n'
         pct98 = f'98th Percentile similarity score: {round(top2pct,2)}'
-        sample = f'Includes {position}s from 112 leagues, minimum 900 mins  |  Sample size: {len(base)} players'
+        sample = f'Includes {position}s from 161 leagues, minimum 450 mins  |  Sample size: {len(base)} players'
         score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
         sim_note = "Similarity is purely style/profile based on over 35 metrics, not that each player is the same quality"
         sim_lg_team_note = f"Showing top {nplayers} players, ages {min_age}-{max_age}, in top 2% of similarity{extra}"
