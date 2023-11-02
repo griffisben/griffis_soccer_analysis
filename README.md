@@ -54,6 +54,8 @@ whoscored_match_report(
     date = 'Oct 20, 2023',
     # Your signature
     sig = '@BeGriffis',
+    # Language for the image (English, Spanish, Portuguese)
+    language = 'English',
     
     # Location of your Chromedriver
     chrome_driver_loc = r"C:\Users\Ben\chromedriver.exe",
