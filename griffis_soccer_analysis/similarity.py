@@ -236,7 +236,7 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
         
         final = final[final['Age'].between(min_age,max_age)]
 
-        final['T5'] = [1 if final.iloc[x,0].split(", ")[2].split(')')[0] == 'Premier League 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Ligue 1 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Bundesliga 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'La Liga 22-23' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Serie A 22-23' else 0\
+        final['T5'] = [1 if final.iloc[x,0].split(", ")[2].split(')')[0] == 'Premier League 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Ligue 1 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Bundesliga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'La Liga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Serie A 23-24' else 0\
                        for x in range(len(final))]
         if t5_leagues in ['y','Y','yes','Yes','YES']:
             final = final.loc[final.T5==1][['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
