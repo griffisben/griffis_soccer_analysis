@@ -183,17 +183,36 @@ df
 ```
 #### Player similarities
 ```Python
-# This is how to grab all outputs
+"""
+CHOICES FOR compare_league VARIABLE
+
+All
+UEFA T5
+UEFA Next 10
+UEFA Next 20
+UEFA T5 2nd Tiers
+8 AFC
+CONMEBOL Top 4
+Argentina & Brazil
+Scandinavia (note: this only includes top tiers from Denmark, Norway, Sweden, and Finland)
+
+Or, make your own by writing each league-season name (can find with available_leagues()) separated by a space & comma:
+    'MLS 2023, Liga MX 23-24'
+    'Premier League 23-24, Championship 23-24, League One 23-24, League Two 23-24'
+
+"""
+
 df, info, dist_fig = player_similarity(
-    player = "C. Nieuwenhof (22, Western Sydney Wanderers, A-League Men 22-23)",
+    player = "E. Spertsyan (23, Krasnodar, Russian Premier League 23-24)",
     position = "CM",
     nplayers = 20,
-    t5_leagues = 'y',  # 'y', 'Y', 'yes', 'Yes' will only show similar players that currently (22/23) play in the T5 UEFA leagues
-    min_age = 1,   # Minimum age of similar players (always still inside the top 2%)
-    max_age = 99,   # Maximum age of similar players
+    compare_leagues = 'Premier League 23-25',
+    min_age = 16,   # Minimum age of similar players (always still inside the top 5%)
+    max_age = 40,   # Maximum age of similar players (always still inside the top 5%)
     similar_lg_team = False,
-    mean_sim = False
+    mean_sim = False,
 )
+
 # This is one way to print the information and then the similarity dataframe
 for i in range(len(info)):
     print(info[i])
