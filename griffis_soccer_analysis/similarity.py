@@ -133,7 +133,7 @@ def team_similarity(team, league, season, nteams=20):
 
     return final, information, fig
 
-def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, max_age=99, similar_lg_team=False, mean_sim=False):
+def player_similarity(player, position, nplayers=20, compare_leagues='All', min_age=1, max_age=99, similar_lg_team=False, mean_sim=False):
     if position == 'GK':
         print('Sorry... GKs unavailable right now.')
         return ['Sorry'], ['Sorry'], ['Sorry']
@@ -153,31 +153,31 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
         base = df[(df['Player 1']==player) | (df['Player 2']==player)].sort_values(by=['Similarity'],ascending=False).reset_index(drop=True)
         base['Player'] = (base['Player 2']).where(base['Player 1'] == player, base['Player 1'])
         base = base.loc[:, ['Player', 'Similarity']]
-        top2pct = base.Similarity.quantile(.98)
+        top5pct = base.Similarity.quantile(.95)
         
         if similar_lg_team == True:
-            if t5_leagues in ['y','Y','yes','Yes','YES']:
-                extra = " in UEFA T5 leagues that are also in teams & leagues with relatively similar styles"
+            if compare_leagues.title() != 'All':
+                extra = " in selected leagues that are also in teams & leagues with relatively similar styles"
             else:
                 extra = " that are also in teams & leagues with relatively similar styles"
         else:
-            if t5_leagues in ['y','Y','yes','Yes','YES']:
-                extra = " in UEFA T5 leagues"
+            if compare_leagues.title() != 'All':
+                extra = " in selected leagues"
             else:
                 extra = ""
 
         # Basic notes
         title = f'\033[1mPlayer Style/Profile Similarity to: {player}\033[0;0m\n'
-        pct98 = f'98th Percentile similarity score: {round(top2pct,2)}'
+        pct95 = f'95th Percentile similarity score: {round(top5pct,2)}'
         sample = f'Includes {position}s from 161 leagues, minimum 450 mins  |  Sample size: {len(base)} players'
         score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
         sim_note = "Similarity is purely style/profile based on over 35 metrics, not that each player is the same quality"
         sim_lg_team_note = f"Showing top {nplayers} players, ages {min_age}-{max_age}, in top 2% of similarity{extra}"
         signature = "Data via Wyscout  |  Model by Ben Griffis (@BeGriffis)"
 
-        information = [title,pct98,sample,score_note,sim_note,sim_lg_team_note,signature]
+        information = [title,pct95,sample,score_note,sim_note,sim_lg_team_note,signature]
 
-        final = base[base.Similarity >= top2pct].reset_index(drop=True)
+        final = base[base.Similarity >= top5pct].reset_index(drop=True)
 
         foc_p = player.split(", ")[2].split(')')[0]
         foc_t = player.split(', ')[1]
@@ -221,10 +221,10 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
                    })
 
         plt.hist(base.Similarity, bins=100, color='teal', alpha=.3)
-        plt.axvline(x=base.Similarity.quantile(.98),
+        plt.axvline(x=base.Similarity.quantile(.95),
                     color='teal', ymax=.1, lw=1.5, alpha=.8)
-        plt.text(x=base.Similarity.quantile(.98)-1, y=1,
-                 s='98th Percentile', ha='right', va='bottom', color='darkslategrey', size=6)
+        plt.text(x=base.Similarity.quantile(.95)-1, y=1,
+                 s='95th Percentile', ha='right', va='bottom', color='darkslategrey', size=6)
         plt.title(f'Player Style/Profile Similarity to\n{player}\nDistribution of all {position} similarities\nData via Wyscout | Model by @BeGriffis',
                   color='#4A2E19', size=8)
 
@@ -236,13 +236,46 @@ def player_similarity(player, position, nplayers=20, t5_leagues='n', min_age=1, 
         
         final = final[final['Age'].between(min_age,max_age)]
 
-        final['T5'] = [1 if final.iloc[x,0].split(", ")[2].split(')')[0] == 'Premier League 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Ligue 1 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Bundesliga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'La Liga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Serie A 23-24' else 0\
-                       for x in range(len(final))]
-        if t5_leagues in ['y','Y','yes','Yes','YES']:
+#         final['T5'] = [1 if final.iloc[x,0].split(", ")[2].split(')')[0] == 'Premier League 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Ligue 1 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Bundesliga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'La Liga 23-24' or final.iloc[x,0].split(", ")[2].split(')')[0] == 'Serie A 23-24' else 0\
+#                        for x in range(len(final))]
+#         if t5_leagues in ['y','Y','yes','Yes','YES']:
+#             final = final.loc[final.T5==1][['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
+#         else:
+#             final = final[['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
+
+        if compare_leagues.title() != 'All':
+            if compare_leagues.upper() == 'UEFA T5':
+                lgs = ['Premier League 23-24', 'La Liga 23-24', 'Ligue 1 23-24', 'Bundesliga 23-24', 'Serie A 23-24']
+            elif compare_leagues.upper() == 'CONMEBOL TOP 4':
+                lgs = ['Brasileirão 2023', 'Argentina LPF 2023', 'Chilean Primera División 2023', 'Colombian Primera A 2023',]
+            elif compare_leagues.upper() == 'ARGENTINA & BRAZIL':
+                lgs = ['Brasileirão 2023', 'Argentina LPF 2023']
+            elif compare_leagues.upper() == '8 AFC':
+                lgs = ['Saudi Pro League 23-24', 'J1 2023', 'K League 1 2023', 'Qatari Stars League 23-24', 'UAE Pro League 23-24', 'A-League Men 23-24', 'Thai League 1 23-24', 'Chinese Super League 2023']
+            elif compare_leagues.upper() == 'UEFA NEXT 10':
+                lgs = ['Eredivisie 23-24', 'Primeira Liga 23-24', 'Belgian Pro League 23-24', 'Süper Lig 23-24', 'Scottish Premiership 23-24',
+                      'Austrian Bundesliga 23-24', 'Swiss Super League 23-24', 'Danish Superliga 23-24', 'Ekstraklasa 23-24', 'Russian Premier League 23-24']
+            elif compare_leagues.upper() == 'UEFA NEXT 20':
+                lgs = ['Eredivisie 23-24', 'Primeira Liga 23-24', 'Belgian Pro League 23-24', 'Süper Lig 23-24', 'Scottish Premiership 23-24',
+                      'Austrian Bundesliga 23-24', 'Swiss Super League 23-24', 'Danish Superliga 23-24', 'Czech Fortuna Liga 23-24', 'Eliteserien 2023',
+                      'Allsvenskan 2023', 'Ekstraklasa 23-24', 'Russian Premier League 23-24', 'Greek Super League 23-24', 'Ukrainian Premier League 23-24',
+                      'Serbian Super Liga 23-24', '1. HNL 23-24', 'Cyprus 1. Division 23-24', 'Romanian Superliga 23-24', 'NB I 23-24']
+            elif compare_leagues.upper() == 'UEFA T5 2ND TIERS':
+                lgs = ['Championship 23-24', 'Ligue 2 23-24', 'Serie B 23-24', '2. Bundesliga 23-24', 'La Liga 2 23-24']
+            elif compare_leagues.upper() == 'SCANDINAVIA':
+                lgs = ['Danish Superliga 23-24', 'Allsvenskan 2023', 'Eliteserien 2023', 'Veikkausliiga 2023']
+            else:
+                lgs = compare_leagues.split(', ')
+            final['T5'] = [1 if x.split(", ")[2].split(')')[0] in lgs else 0 for x in final.iloc[:, 0]]
             final = final.loc[final.T5==1][['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
         else:
             final = final[['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
-
+        final[['Player Style Similarity','League Style Similarity','Team Style Similarity']] = round(final[['Player Style Similarity','League Style Similarity','Team Style Similarity']],2)
+        print(f'Leagues in the sample: {lgs}\n')
+        
+        if len(final)==0:
+            print('IMPORTANT NOTE: No players found... please check spelling of the compare_leagues variable or custom leagues, or that you spearated each league with a comma and then 1 space\nIf you used a small sample of leagues or only have a single league as the custom sample, there might not be any similar style players in this league\n')
+        
         return final.head(nplayers).reset_index(drop=True), information, fig
 
 def available_leagues():
