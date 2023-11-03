@@ -268,10 +268,10 @@ def player_similarity(player, position, nplayers=20, compare_leagues='All', min_
                 lgs = compare_leagues.split(', ')
             final['T5'] = [1 if x.split(", ")[2].split(')')[0] in lgs else 0 for x in final.iloc[:, 0]]
             final = final.loc[final.T5==1][['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
+            print(f'Leagues in the sample: {lgs}\n')
         else:
             final = final[['Player','Player Style Similarity','League Style Similarity','Team Style Similarity']]
         final[['Player Style Similarity','League Style Similarity','Team Style Similarity']] = round(final[['Player Style Similarity','League Style Similarity','Team Style Similarity']],2)
-        print(f'Leagues in the sample: {lgs}\n')
         
         if len(final)==0:
             print('IMPORTANT NOTE: No players found... please check spelling of the compare_leagues variable or custom leagues, or that you spearated each league with a comma and then 1 space\nIf you used a small sample of leagues or only have a single league as the custom sample, there might not be any similar style players in this league\n')
