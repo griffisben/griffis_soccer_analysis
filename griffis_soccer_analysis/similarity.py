@@ -172,7 +172,7 @@ def player_similarity(player, position, nplayers=20, compare_leagues='All', min_
         sample = f'Includes {position}s from 161 leagues, minimum 450 mins  |  Sample size: {len(base)} players'
         score_note = "All similarity values are between -100 (as opposite as possible) & 100 (the exact same)"
         sim_note = "Similarity is purely style/profile based on over 35 metrics, not that each player is the same quality"
-        sim_lg_team_note = f"Showing top {nplayers} players, ages {min_age}-{max_age}, in top 2% of similarity{extra}"
+        sim_lg_team_note = f"Showing top {nplayers} players, ages {min_age}-{max_age}, in top 5% of similarity{extra}"
         signature = "Data via Wyscout  |  Model by Ben Griffis (@BeGriffis)"
 
         information = [title,pct95,sample,score_note,sim_note,sim_lg_team_note,signature]
