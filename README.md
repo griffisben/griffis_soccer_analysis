@@ -54,7 +54,7 @@ whoscored_match_report(
     date = 'Oct 20, 2023',
     # Your signature
     sig = '@BeGriffis',
-    # Language for the image (English, Spanish, Portuguese)
+    # Language for the image (English, Spanish, Portuguese, French)
     language = 'English',
     
     # Location of your Chromedriver
