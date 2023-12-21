@@ -1257,6 +1257,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                 nongoals.Outcome[i] = 'Off Target'
             if gy > 54.8:
                 nongoals.Outcome[i] = 'Off Target'
+            if nongoals['type/value'][i] == 14:
+                nongoals.Outcome[i] = 'Off Target'
 
         goals = df[df['type/value']==16].reset_index(drop=True)
 
@@ -2524,6 +2526,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
             if gy < 45.2:
                 nongoals.Outcome[i] = 'Off Target'
             if gy > 54.8:
+                nongoals.Outcome[i] = 'Off Target'
+            if nongoals['type/value'][i] == 14:
                 nongoals.Outcome[i] = 'Off Target'
 
         goals = df[df['type/value']==16].reset_index(drop=True)
@@ -3796,6 +3800,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                 nongoals.Outcome[i] = 'Off Target'
             if gy > 54.8:
                 nongoals.Outcome[i] = 'Off Target'
+            if nongoals['type/value'][i] == 14:
+                nongoals.Outcome[i] = 'Off Target'
 
         goals = df[df['type/value']==16].reset_index(drop=True)
 
@@ -4117,7 +4123,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontproperties=fprop,
                           fontsize=22)
 
-        ax.text(50,-2, "Direction de l'atattaque --->",
+        ax.text(50,-2, "Direction de l'attaque --->",
                           color='#4A2E19',va='top', ha='center',
                           fontproperties=fprop,fontsize=13)
 
@@ -4195,7 +4201,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontproperties=fprop,
                           fontsize=22)
 
-        ax.text(50,-2, "<--- Direction de l'atattaque",
+        ax.text(50,-2, "<--- Direction de l'attaque",
                           color='#4A2E19',va='top', ha='center',
                           fontproperties=fprop,fontsize=13)
 
@@ -4297,7 +4303,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontproperties=fprop,
                           fontsize=22)
 
-        ax.text(50,-2, "Direction de l'atattaque --->",
+        ax.text(50,-2, "Direction de l'attaque --->",
                           color='#4A2E19',va='top', ha='center',
                           fontproperties=fprop,fontsize=13)
         ax.text(99,-13, 'Réussies',
@@ -4362,7 +4368,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontproperties=fprop,
                           fontsize=22)
 
-        ax.text(50,-2, "<--- Direction de l'atattaque",
+        ax.text(50,-2, "<--- Direction de l'attaque",
                           color='#4A2E19',va='top', ha='center',
                           fontproperties=fprop,fontsize=13)
         ax.text(1,-13, 'Réussies',
@@ -5061,6 +5067,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
             if gy < 45.2:
                 nongoals.Outcome[i] = 'Off Target'
             if gy > 54.8:
+                nongoals.Outcome[i] = 'Off Target'
+            if nongoals['type/value'][i] == 14:
                 nongoals.Outcome[i] = 'Off Target'
 
         goals = df[df['type/value']==16].reset_index(drop=True)
