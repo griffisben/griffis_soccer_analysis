@@ -30,6 +30,8 @@ from griffis_soccer_analysis.whoscored_match_report import *
 ```
 ## Whoscored Match Report Example
 
+#### Please note that you are welcome to take some of the raw code and modify to your needs. If you do that, though, please ensure that you give me credit no matter how much you modify. thank you.
+
 #### Download a csv of events for a given match on the Detailed Tournaments section of Whoscored, and make a post-match report image
 ``` python
 whoscored_match_report(
