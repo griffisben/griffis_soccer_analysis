@@ -780,9 +780,14 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         df_90s = df_90s.iloc[:,10:].add_suffix('Per90')
         df_new = df.join(df_90s)
 
-        if comp in ['Liga MX', 'Primeira Liga', 'Eredivisie', 'Championship']:
+        # if comp in ['Liga MX', 'Primeira Liga', 'Eredivisie', 'Championship']:
+        #    for i in range(len(df_new)):
+        #        df_new['Age'][i] = int(df_new['Age'][i][:2])
+
+        if '-' in df_new.Age.iloc[0]:
             for i in range(len(df_new)):
                 df_new['Age'][i] = int(df_new['Age'][i][:2])
+
 
         df_new.to_csv("%s%s.csv" %(root, final_nongk), index=False, encoding = 'utf-8-sig')
 
