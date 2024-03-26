@@ -350,6 +350,9 @@ def scrape_fbref_t5_leagues_players(season):
         df.at[i, 'TeamTouches90'] = team_touches
 
     df.iloc[:,9:] = df.iloc[:,9:].astype(float)
+    df.Carries = df.Carries.astype(float)
+    df.Touches = df.Touches.astype(float)
+
     # All of these are the possession-adjusted columns. A couple touch-adjusted ones at the bottom
     df['pAdjTkl+IntPer90'] = (df['Tkl+IntPer90']/(100-df['AvgTeamPoss']))*50
     df['pAdjClrPer90'] = (df['ClrPer90']/(100-df['AvgTeamPoss']))*50
@@ -366,9 +369,9 @@ def scrape_fbref_t5_leagues_players(season):
     # df['pAdj#OPAPer90'] =(df['#OPAPer90']/(100-df['AvgTeamPoss']))*50
     df['Tkl+IntPer600OppTouch'] = df['Tkl+Int'] /(df['OppTouches']*(df['Min']/df['TeamMins']))*600
     df['pAdjTouchesPer90'] = (df['TouchesPer90']/(df['AvgTeamPoss']))*50
-    df['CarriesPer50Touches'] = df['Carries'] / df['Touches'] * 50
-    df['ProgCarriesPer50Touches'] = df['ProgCarries'] / df['Touches'] * 50
-    df['ProgPassesPer50CmpPasses'] = df['ProgPasses'] / df['PassesCompleted'] * 50
+    df['CarriesPer50Touches'] = df.apply(lambda row: row['Carries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+    df['ProgCarriesPer50Touches'] = df.apply(lambda row: row['ProgCarries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+    df['ProgPassesPer50CmpPasses'] = df.apply(lambda row: row['ProgPasses'] / row['PassesCompleted'] if row['PassesCompleted'] != 0 else 0, axis=1)
 
 
     # Now we'll add the players' actual positions, from @jaseziv, into the file
@@ -407,6 +410,9 @@ def scrape_fbref_t5_leagues_players(season):
         df.at[i, 'TeamTouches90'] = team_touches
 
     df.iloc[:,9:] = df.iloc[:,9:].astype(float)
+    df.Carries = df.Carries.astype(float)
+    df.Touches = df.Touches.astype(float)
+
     # Same thing, makes pAdj stats for the GK file
     df['pAdjTkl+IntPer90'] = (df['Tkl+IntPer90']/(100-df['AvgTeamPoss']))*50
     df['pAdjClrPer90'] = (df['ClrPer90']/(100-df['AvgTeamPoss']))*50
@@ -423,9 +429,10 @@ def scrape_fbref_t5_leagues_players(season):
     df['pAdj#OPAPer90'] =(df['#OPAPer90']/(100-df['AvgTeamPoss']))*50
     df['Tkl+IntPer600OppTouch'] = df['Tkl+Int'] /(df['OppTouches']*(df['Min']/df['TeamMins']))*600
     df['pAdjTouchesPer90'] = (df['TouchesPer90']/(df['AvgTeamPoss']))*50
-    df['CarriesPer50Touches'] = df['Carries'] / df['Touches'] * 50
-    df['ProgCarriesPer50Touches'] = df['ProgCarries'] / df['Touches'] * 50
-    df['ProgPassesPer50CmpPasses'] = df['ProgPasses'] / df['PassesCompleted'] * 50
+    df['CarriesPer50Touches'] = df.apply(lambda row: row['Carries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+    df['ProgCarriesPer50Touches'] = df.apply(lambda row: row['ProgCarries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+    df['ProgPassesPer50CmpPasses'] = df.apply(lambda row: row['ProgPasses'] / row['PassesCompleted'] if row['PassesCompleted'] != 0 else 0, axis=1)
+
 
 
     # Just adding the main positions to the GK too, but of course, they will all be GK lol. Keeps other program variables clean
@@ -437,6 +444,7 @@ def scrape_fbref_t5_leagues_players(season):
             df['Main Position'][i] = 'Goalkeeper'
     df.to_csv("%s%s.csv" %(root, final_gk), index=False, encoding='utf-8-sig')
     print(f'Done :) Files are located at  %s/Final FBRef {season}.csv' %root)
+
 
 
 def scrape_fbref_next12_leagues_players(comps, seasons):
@@ -858,6 +866,9 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
             df.at[i, 'TeamTouches90'] = team_touches
 
         df.iloc[:,9:] = df.iloc[:,9:].astype(float)
+        df.Carries = df.Carries.astype(float)
+        df.Touches = df.Touches.astype(float)
+
         # All of these are the possession-adjusted columns. A couple touch-adjusted ones at the bottom
         df['pAdjTkl+IntPer90'] = (df['Tkl+IntPer90']/(100-df['AvgTeamPoss']))*50
         df['pAdjClrPer90'] = (df['ClrPer90']/(100-df['AvgTeamPoss']))*50
@@ -874,9 +885,9 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         # df['pAdj#OPAPer90'] =(df['#OPAPer90']/(100-df['AvgTeamPoss']))*50
         df['Tkl+IntPer600OppTouch'] = df['Tkl+Int'] /(df['OppTouches']*(df['Min']/df['TeamMins']))*600
         df['pAdjTouchesPer90'] = (df['TouchesPer90']/(df['AvgTeamPoss']))*50
-        df['CarriesPer50Touches'] = df['Carries'] / df['Touches'] * 50
-        df['ProgCarriesPer50Touches'] = df['ProgCarries'] / df['Touches'] * 50
-        df['ProgPassesPer50CmpPasses'] = df['ProgPasses'] / df['PassesCompleted'] * 50
+        df['CarriesPer50Touches'] = df.apply(lambda row: row['Carries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+        df['ProgCarriesPer50Touches'] = df.apply(lambda row: row['ProgCarries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+        df['ProgPassesPer50CmpPasses'] = df.apply(lambda row: row['ProgPasses'] / row['PassesCompleted'] if row['PassesCompleted'] != 0 else 0, axis=1)
 
 
         # Now we'll add the players' actual positions, from @jaseziv, into the file
@@ -915,6 +926,9 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
             df.at[i, 'TeamTouches90'] = team_touches
 
         df.iloc[:,9:] = df.iloc[:,9:].astype(float)
+        df.Carries = df.Carries.astype(float)
+        df.Touches = df.Touches.astype(float)
+
         # Same thing, makes pAdj stats for the GK file
         df['pAdjTkl+IntPer90'] = (df['Tkl+IntPer90']/(100-df['AvgTeamPoss']))*50
         df['pAdjClrPer90'] = (df['ClrPer90']/(100-df['AvgTeamPoss']))*50
@@ -931,9 +945,9 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         df['pAdj#OPAPer90'] =(df['#OPAPer90']/(100-df['AvgTeamPoss']))*50
         df['Tkl+IntPer600OppTouch'] = df['Tkl+Int'] /(df['OppTouches']*(df['Min']/df['TeamMins']))*600
         df['pAdjTouchesPer90'] = (df['TouchesPer90']/(df['AvgTeamPoss']))*50
-        df['CarriesPer50Touches'] = df['Carries'] / df['Touches'] * 50
-        df['ProgCarriesPer50Touches'] = df['ProgCarries'] / df['Touches'] * 50
-        df['ProgPassesPer50CmpPasses'] = df['ProgPasses'] / df['PassesCompleted'] * 50
+        df['CarriesPer50Touches'] = df.apply(lambda row: row['Carries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+        df['ProgCarriesPer50Touches'] = df.apply(lambda row: row['ProgCarries'] / row['Touches'] if row['Touches'] != 0 else 0, axis=1)
+        df['ProgPassesPer50CmpPasses'] = df.apply(lambda row: row['ProgPasses'] / row['PassesCompleted'] if row['PassesCompleted'] != 0 else 0, axis=1)
 
 
         # Just adding the main positions to the GK too, but of course, they will all be GK lol. Keeps other program variables clean

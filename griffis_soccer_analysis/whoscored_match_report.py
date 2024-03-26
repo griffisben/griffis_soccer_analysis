@@ -1264,21 +1264,21 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_h, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3))
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75)
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(100-goals[goals['teamId']==teamId_h].x, 100-goals[goals['teamId']==teamId_h].y,
-                                ax=ax, s=500, color=end_color_h, ec=kitline_h, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_h, ec=kitline_h, marker='*', lw=2)
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
                                 ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75)
+                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
-                                ax=ax, s=500, color=end_color_a, ec=kitline_a, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
         ax.text(50, 102, "Shot Map",
                           color='#4A2E19',
@@ -1287,8 +1287,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontsize=35)
         ax.text(50, -3, 'Dots are shots, stars are goals.',
                 va='top', ha='center', fontsize=18, color='#4A2E19', fontproperties=fprop)
-        ax.text(50, -11, 'Shots on target are colored, off target are white',
-                va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
+        # ax.text(50, -11, 'Shots on target are colored, off target are white',
+        #         va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
 
 
         fig = plt.gcf()
@@ -2534,21 +2534,21 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_h, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3))
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75)
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(100-goals[goals['teamId']==teamId_h].x, 100-goals[goals['teamId']==teamId_h].y,
-                                ax=ax, s=500, color=end_color_h, ec=kitline_h, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_h, ec=kitline_h, marker='*', lw=2)
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
                                 ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75)
+                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
-                                ax=ax, s=500, color=end_color_a, ec=kitline_a, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
         ax.text(50, 102, "Mapa de chutes",
                           color='#4A2E19',
@@ -2557,8 +2557,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontsize=35)
         ax.text(50, -3, 'Pontos são chutes, estrelas são gols',
                 va='top', ha='center', fontsize=18, color='#4A2E19', fontproperties=fprop)
-        ax.text(50, -11, 'Chutes ao alvo: coloridos / chutes errados: brancos',
-                va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
+        # ax.text(50, -11, 'Chutes ao alvo: coloridos / chutes errados: brancos',
+        #         va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
 
 
         fig = plt.gcf()
@@ -3807,21 +3807,21 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_h, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3))
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75)
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(100-goals[goals['teamId']==teamId_h].x, 100-goals[goals['teamId']==teamId_h].y,
-                                ax=ax, s=500, color=end_color_h, ec=kitline_h, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_h, ec=kitline_h, marker='*', lw=2)
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
                                 ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75)
+                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
-                                ax=ax, s=500, color=end_color_a, ec=kitline_a, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
         ax.text(50, 102, "Mapa de remates",
                           color='#4A2E19',
@@ -3830,8 +3830,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontsize=35)
         ax.text(50, -3, 'Los puntos son tiros, las estrellas son goles',
                 va='top', ha='center', fontsize=18, color='#4A2E19', fontproperties=fprop)
-        ax.text(50, -11, 'Tiros a portería: coloridos / no a portería: brancos',
-                va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
+        # ax.text(50, -11, 'Tiros a portería: coloridos / no a portería: brancos',
+        #         va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
 
 
         fig = plt.gcf()
@@ -4117,7 +4117,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                            vmax=np.percentile(maxstat['statistic'],95)
                           )
 
-        ax.text(50, 102, "Zone de déclanchement\ndes xT par la passe",
+        ax.text(50, 102, "Zone de déclenchement\ndes xT par la passe",
                           color='#4A2E19',
                           va='bottom', ha='center',
                           fontproperties=fprop,
@@ -4195,7 +4195,7 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                            vmax=np.percentile(maxstat['statistic'],95)
                           )
 
-        ax.text(50, 102, "Zone de déclanchement\ndes xT par la passe",
+        ax.text(50, 102, "Zone de déclenchement\ndes xT par la passe",
                           color='#4A2E19',
                           va='bottom', ha='center',
                           fontproperties=fprop,
@@ -5075,21 +5075,21 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_h, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3))
         scatter = pitch.scatter(100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].x,
                                 100-nongoals[(nongoals['teamId']==teamId_h) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75)
+                                ax=ax, s=150, color=end_color_h, ec=kitline_h, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(100-goals[goals['teamId']==teamId_h].x, 100-goals[goals['teamId']==teamId_h].y,
-                                ax=ax, s=500, color=end_color_h, ec=kitline_h, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_h, ec=kitline_h, marker='*', lw=2)
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
                                 ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75)
+                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
-                                ax=ax, s=500, color=end_color_a, ec=kitline_a, marker='*', lw=2)
+                                ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
         ax.text(50, 102, "Carte des tirs",
                           color='#4A2E19',
@@ -5098,8 +5098,8 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
                           fontsize=35)
         ax.text(50, -3, 'Points : tirs / étoiles : buts',
                 va='top', ha='center', fontsize=18, color='#4A2E19', fontproperties=fprop)
-        ax.text(50, -11, 'Cadrés : colorés / Non cadrés : blancs',
-                va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
+        # ax.text(50, -11, 'Cadrés : colorés / Non cadrés : blancs',
+        #         va='top', ha='center', fontsize=15, color='#4A2E19', fontproperties=fprop)
 
 
         fig = plt.gcf()
