@@ -82,33 +82,55 @@ scrape_fbref_t5_leagues_players(season = '2023-2024')
 
 #### Download the latest FBRef data (via Opta) for all other leagues FBRef has advanced data for (note, will only work for the current, ongoing season)
 ``` python
-comps = ['2. Bundesliga',
-         'Ligue 2',
-         'Serie B',
-         'La Liga 2',
-         'Belgian Pro League',
-         'Argentine Primera División',
-         'Argentina Copa de la Liga'
-         'Liga MX',
-         'MLS',
-         'Brasileirão',
-         'Eredivisie',
-         'Primeira Liga',
-         'Championship',
+# Comment out any leagues (and their respective season) that you don't want to download
+# Also make sure to update the season if a change in season occurs... only changes file name, not the season that's scraped
+comps = [
+        '2. Bundesliga',
+        'Ligue 2',
+        'Serie B',
+        'La Liga 2',
+        'Belgian Pro League',
+        'Liga MX',
+        'Eredivisie',
+        'Primeira Liga',
+        'Championship',
+    
+        'Argentine Primera División',
+        'Argentina Copa de la Liga'
+        'MLS',
+        'Brasileirão',
+
+        'NWSL',
+        'WSL',
+        'Liga F',
+        'A-League Women',
+        'Division 1 Féminine',
+        'Frauen-Bundesliga',
+        'Serie A Femminile'
 ]
-ssns = ['2023-2024',
+ssns = [
         '2023-2024',
         '2023-2024',
         '2023-2024',
         '2023-2024',
-        '2023',
-        '2023',
-        '2023-2024',
-        '2023',
-        '2023',
         '2023-2024',
         '2023-2024',
         '2023-2024',
+        '2023-2024',
+        '2023-2024',
+    
+        '2024',
+        '2024',
+        '2024',
+        '2024',
+
+        '2024',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024',
+        '2023-2024'
        ]
 
 scrape_fbref_next12_leagues_players(comps = comps, seasons = ssns)
