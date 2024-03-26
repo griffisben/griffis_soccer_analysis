@@ -799,10 +799,12 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         df_90s = df_90s.iloc[:,10:].add_suffix('Per90')
         df_new = df.join(df_90s)
 
-        if comp in ['Liga MX', 'Primeira Liga', 'Eredivisie', 'Championship']:
+        try:
             for i in range(len(df_new)):
                 df_new['Age'][i] = int(df_new['Age'][i][:2])
-
+        except:
+            pass
+            
         df_new.to_csv("%s%s.csv" %(root, final_gk), index=False, encoding = 'utf-8-sig')
 
 
@@ -1008,17 +1010,6 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
 
     print('Done :) File named "Final FBRef Next 12 Leagues" is located at  %s' %root)
 
-
-
-def combine_t5_next12_fbref(t5_season):
-    root = str(Path(os.getcwd()).parents[0]).replace('\\','/')+'/'
-    
-    t5 = pd.read_csv(f'{root}Final FBRef {t5_season}.csv')
-    n12 = pd.read_csv(f'{root}Final FBRef Next 12 Leagues.csv')
-    
-    df = pd.concat([t5,n12])
-    df.to_csv(f'{root}Final FBRef {t5_season}.csv', encoding='utf_8_sig', index=False)
-    
 
 
 
