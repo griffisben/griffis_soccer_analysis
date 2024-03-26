@@ -1000,8 +1000,8 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         df = pd.concat([df,df1])
         df_gk = pd.concat([df_gk,df1_gk])
         
-        os.remove(f'{root}{final_gk}.csv')
-        os.remove(f'{root}{final_nongk}.csv')
+        # os.remove(f'{root}{final_gk}.csv')
+        # os.remove(f'{root}{final_nongk}.csv')
 
     df.to_csv(f'{root}Final FBRef Next 12 Leagues.csv', index=False, encoding='utf-8-sig')
     df_gk.to_csv(f'{root}Final FBRef Next 12 Leagues GK.csv', index=False, encoding='utf-8-sig')
