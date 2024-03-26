@@ -1273,15 +1273,15 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
                                 ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
         ax.text(50, 102, "Shot Map",
-                          color='#4A2E19',
+                        color='#4A2E19',
                           va='bottom', ha='center',
                           fontproperties=fprop,
                           fontsize=35)
@@ -2543,10 +2543,10 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
                                 ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
@@ -3816,10 +3816,10 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
                                 ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
@@ -5084,10 +5084,10 @@ def whoscored_match_report(url, match, team_h, teamId_h, team_a, teamId_a, lg, s
 
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='Off Target')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].x,
                                 nongoals[(nongoals['teamId']==teamId_a) & (nongoals['Outcome']=='')].y,
-                                ax=ax, s=150, color='white', ec=end_color_a, lw=.75, ls='--')
+                                ax=ax, s=150, color=end_color_a, ec=kitline_a, lw=.75, ls='--', alpha=.3)
         scatter = pitch.scatter(goals[goals['teamId']==teamId_a].x, goals[goals['teamId']==teamId_a].y,
                                 ax=ax, s=550, color=end_color_a, ec=kitline_a, marker='*', lw=2)
 
