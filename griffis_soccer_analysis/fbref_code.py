@@ -611,6 +611,27 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         if comp == 'Copa de la Liga':
             lg_str = 'Copa-de-la-Liga-Profesional'
             lg_id = 905
+        if comp == 'WSL':
+            lg_str = 'Womens-Super-League'
+            lg_id = 189
+        if comp == 'NWSL':
+            lg_str = 'NWSL'
+            lg_id = 182
+        if comp == 'Liga F':
+            lg_str = 'Liga-F'
+            lg_id = 230
+        if comp == 'A-League Women':
+            lg_str = 'A-League-Women'
+            lg_id = 196
+        if comp == 'Division 1 Féminine':
+            lg_str = 'Division-1-Feminine'
+            lg_id = 193
+        if comp == 'Frauen-Bundesliga':
+            lg_str = 'Frauen-Bundesliga'
+            lg_id = 183
+        if comp == 'Serie A Femminile':
+            lg_str = 'Serie-A'
+            lg_id = 208
 
 
         # this is the file path root, i.e. where this file is located
