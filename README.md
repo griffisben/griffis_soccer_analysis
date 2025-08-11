@@ -1,14 +1,12 @@
 # Griffis-Soccer-Analysis <img src="images/Ben Logo Round.png" align="right" width="150" height="150"/>
 
+## Please note that I cannot keep some of these up to date... WhoScored & FBRef code still works as of August 11, 2025. I have not updated Similarity Scores for 2 years :(
+
 ## Overview
 
 This package includes several of the functions I use to analyze football data. More functions will be added as I get everything situated.
 
 Currently, I just have functions to generated style/profile similarities between players, teams, and leagues. As this is the first time I'm publishing a package, I needed to start small.
-
-## Similarity Scores
-
-Similarity scores are purely based on the *style*, not *quality* of a player, league, or team. They are generated from over 35 variales (all z-scores so they are the same scale) and use Cosine Similarity. This is a pretty standard method, and StatsBomb uses Cosine Similarity as one method for their similar player search.
 
 ## Installation
 
@@ -157,6 +155,10 @@ fbref_scout_report(season = '2023-2024',
             fbref_file_path = 'C:/Users/Ben/From Mac/Python/'
            )
 ```
+
+## Similarity Scores
+
+Similarity scores are purely based on the *style*, not *quality* of a player, league, or team. They are generated from over 35 variales (all z-scores so they are the same scale) and use Cosine Similarity. This is a pretty standard method, and StatsBomb uses Cosine Similarity as one method for their similar player search.
 
 ## Similarity Examples
 For a Juypter Notebook file with example code & output and more info on each variable, please [see this file](https://github.com/griffisben/griffis_soccer_analysis/blob/main/griffis_soccer_analysis%20examples.ipynb)
