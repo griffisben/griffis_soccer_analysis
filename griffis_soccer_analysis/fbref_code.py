@@ -735,8 +735,8 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         ############################## GK SECTION ########################################
         ##################################################################################
 
-        gk = "https://fbref.com/en/comps/%i/keepers/players/%s-Stats" %(lg_id, lg_str)
-        advgk = "https://fbref.com/en/comps/%i/keepersadv/players/%s-Stats" %(lg_id, lg_str)
+        gk = "https://fbref.com/en/comps/%i/%s/keepers/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        advgk = "https://fbref.com/en/comps/%i/%s/keepersadv/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
 
         df_gk = get_players_df(gk)
         df_advgk = get_players_df(advgk)
@@ -818,8 +818,8 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         ################ Download team data, for possession-adjusting ####################
         ##################################################################################
 
-        standard = "https://fbref.com/en/comps/%i/stats/squads/%s-Stats" %(lg_id, lg_str)
-        poss = "https://fbref.com/en/comps/%i/possession/squads/%s-Stats" %(lg_id, lg_str)
+        standard = "https://fbref.com/en/comps/%i/%s/stats/squads/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        poss = "https://fbref.com/en/comps/%i/%s/possession/squads/%s-%s-Stats" %(lg_id, season, season, lg_str)
 
         df_standard = get_team_df(standard)
         df_poss = get_team_df(poss)
@@ -847,7 +847,7 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
         ################ Download opposition data, for possession-adjusting ##############
         ##################################################################################
 
-        opp_poss = "https://fbref.com/en/comps/%i/possession/squads/%s-Stats" %(lg_id, lg_str)
+        opp_poss = "https://fbref.com/en/comps/%i/%s/possession/squads/%s-%s-Stats" %(lg_id, season, season, lg_str)
 
         df_opp_poss = get_opp_df(opp_poss)
         df_opp_poss = df_opp_poss.reset_index(drop=True)
