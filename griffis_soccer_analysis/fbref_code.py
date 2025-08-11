@@ -640,14 +640,14 @@ def scrape_fbref_next12_leagues_players(comps, seasons):
 
         # this section gets the raw tables from FBRef.com
 
-        standard = "https://fbref.com/en/comps/%i/stats/%s-Stats" %(lg_id, lg_str)
-        shooting = "https://fbref.com/en/comps/%i/shooting/%s-Stats" %(lg_id, lg_str)
-        passing = "https://fbref.com/en/comps/%i/passing/players/%s-Stats" %(lg_id, lg_str)
-        pass_types = "https://fbref.com/en/comps/%i/passing_types/players/%s-Stats" %(lg_id, lg_str)
-        gsca = "https://fbref.com/en/comps/%i/gca/players/%s-Stats" %(lg_id, lg_str)
-        defense = "https://fbref.com/en/comps/%i/defense/players/%s-Stats" %(lg_id, lg_str)
-        poss = "https://fbref.com/en/comps/%i/possession/players/%s-Stats" %(lg_id, lg_str)
-        misc = "https://fbref.com/en/comps/%i/misc/players/%s-Stats" %(lg_id, lg_str)
+        standard = "https://fbref.com/en/comps/%i/%s/stats/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        shooting = "https://fbref.com/en/comps/%i/%s/shooting/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        passing = "https://fbref.com/en/comps/%i/%s/passing/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        pass_types = "https://fbref.com/en/comps/%i/%s/passing_types/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        gsca = "https://fbref.com/en/comps/%i/%s/gca/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        defense = "https://fbref.com/en/comps/%i/%s/defense/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        poss = "https://fbref.com/en/comps/%i/%s/possession/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
+        misc = "https://fbref.com/en/comps/%i/%s/misc/players/%s-%s-Stats" %(lg_id, season, season, lg_str)
 
         df_standard = get_players_df(standard)
         df_shooting = get_players_df(shooting)
