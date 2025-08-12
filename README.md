@@ -1,12 +1,9 @@
 # Griffis-Soccer-Analysis <img src="images/Ben Logo Round.png" align="right" width="150" height="150"/>
 
-## Please note that I cannot keep some of these up to date... WhoScored & FBRef code still works as of August 11, 2025. I have not updated Similarity Scores for 2 years :(
-
 ## Overview
 
-This package includes several of the functions I use to analyze football data. More functions will be added as I get everything situated.
-
-Currently, I just have functions to generated style/profile similarities between players, teams, and leagues. As this is the first time I'm publishing a package, I needed to start small.
+This package includes a few pieces of code, namely to scrape [FBRef](https://fbref.com/en/) and [WhoScored](https://www.whoscored.com/).
+_As of August 12, 2025... I will be going through some of the code & cleaning it up. Possibly adding more features. Version 2.0 could be released later!_
 
 ## Installation
 
@@ -23,7 +20,6 @@ pip uninstall griffis_soccer_analysis
 Here is an example of how to load the package.
 ``` python
 from griffis_soccer_analysis.fbref_code import *
-from griffis_soccer_analysis.similarity import *
 from griffis_soccer_analysis.whoscored_match_report import *
 ```
 ## Whoscored Match Report Example
@@ -155,90 +151,6 @@ fbref_scout_report(season = '2023-2024',
             fbref_file_path = 'C:/Users/Ben/From Mac/Python/'
            )
 ```
-
-## Similarity Scores
-
-Similarity scores are purely based on the *style*, not *quality* of a player, league, or team. They are generated from over 35 variales (all z-scores so they are the same scale) and use Cosine Similarity. This is a pretty standard method, and StatsBomb uses Cosine Similarity as one method for their similar player search.
-
-## Similarity Examples
-For a Juypter Notebook file with example code & output and more info on each variable, please [see this file](https://github.com/griffisben/griffis_soccer_analysis/blob/main/griffis_soccer_analysis%20examples.ipynb)
-
-#### See available leagues
-```Python
-available_leagues()
-```
-#### See available teams in a league
-```Python
-teams_in_league(
-    league = "A-League Men 22-23"
-)
-```
-#### See available players in a team
-```Python
-available_players(
-    league = "A-League Men 22-23",
-    team = 'Western Sydney Wanderers'
-)
-```
-#### League Similarities
-```Python
-# This is how to grab all outputs
-df, info, dist_fig = league_similarity(
-    league = "A-League Men",
-    season = "22-23",
-    nlgs = 15
-)
-# This is one way to print the information and then the similarity dataframe
-for i in range(len(info)):
-    print(info[i])
-df
-```
-#### Team similarities
-```Python
-# This is how to grab all outputs
-df, info, dist_fig = team_similarity(
-    team = "Western Sydney Wanderers",
-    league = "A-League Men",
-    season = "22-23",
-    nlgs = 15
-)
-# This is one way to print the information and then the similarity dataframe
-for i in range(len(info)):
-    print(info[i])
-df
-```
-#### Player similarities
-```Python
-"""
-CHOICES FOR compare_league VARIABLE
-
-All
-UEFA T5
-UEFA Next 10
-UEFA Next 20
-UEFA T5 2nd Tiers
-8 AFC
-CONMEBOL Top 4
-Argentina & Brazil
-Scandinavia (note: this only includes top tiers from Denmark, Norway, Sweden, and Finland)
-
-Or, make your own by writing each league-season name (can find with available_leagues()) separated by a space & comma:
-    'MLS 2023, Liga MX 23-24'
-    'Premier League 23-24, Championship 23-24, League One 23-24, League Two 23-24'
-
-"""
-
-df, info, dist_fig = player_similarity(
-    player = "E. Spertsyan (23, Krasnodar, Russian Premier League 23-24)",
-    position = "CM",
-    nplayers = 20,
-    compare_leagues = 'All',
-    min_age = 16,   # Minimum age of similar players (always still inside the top 5%)
-    max_age = 40,   # Maximum age of similar players (always still inside the top 5%)
-    similar_lg_team = False,
-    mean_sim = False,
-)
-
 # This is one way to print the information and then the similarity dataframe
 for i in range(len(info)):
     print(info[i])
